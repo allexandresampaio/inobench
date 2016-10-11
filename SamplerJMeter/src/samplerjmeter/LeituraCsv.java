@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import org.bson.Document;
 
 /**
@@ -18,10 +20,10 @@ import org.bson.Document;
  */
 public class LeituraCsv {
 
-    ArrayList<Document> documentos = new ArrayList<>();
+    Collection<Document> documentos = new HashSet<>();
     
     private void criaDocumentos() throws IOException {
-        String path = new File("src/arquivos/TestePlanilha.csv").getCanonicalPath();
+        String path = new File("src/arquivos/AirQualityUCI.csv").getCanonicalPath();
         BufferedReader br = new BufferedReader(new FileReader(path));
         String line = "";
 
@@ -52,7 +54,7 @@ public class LeituraCsv {
         documentos.add(documento);
     }
 
-    public ArrayList<Document> getDocumentos() throws IOException {
+    public Collection<Document> getDocumentos() throws IOException {
         this.criaDocumentos();
         return documentos;
     }
