@@ -6,7 +6,7 @@
 package samplerjmeter;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
@@ -15,17 +15,16 @@ import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.config.Arguments;
 import org.bson.Document;
 
-
 /**
  *
  * @author Allexandre
  */
 public class SamplerMongoDB extends AbstractJavaSamplerClient {
 
-    LeituraXlsx leitor = new LeituraXlsx();
-    ArrayList<Document> documentos;
+    Collection<Document> documentos;
+    LeituraCsv leitor = new LeituraCsv();
+
     //definir os argumentos para acessar o BD
-    
     @Override
     public Arguments getDefaultParameters() {
         Arguments defaultParameters = new Arguments();
@@ -50,7 +49,6 @@ public class SamplerMongoDB extends AbstractJavaSamplerClient {
 
     }
 
-    
     //Write your test logic in this method. 
     ///JMeter will call runTest method for every execution of test threads. 
     //Here is a typical runTest implementation:
@@ -61,13 +59,13 @@ public class SamplerMongoDB extends AbstractJavaSamplerClient {
 
         result.sampleStart();
 
-    //
-    // Write your test code here.
-        for (int i = 0; i<documentos.size(); i++){
-            FachadaMongo.getInstancia().insert(documentos.get(i));
+        //
+        // Write your test code here.
+        for (Document documento : documentos) {
+            FachadaMongo.getInstancia().insert(documento);
         }
-        
-    //
+
+        //
         result.sampleEnd();
 
         result.setSuccessful(success);
