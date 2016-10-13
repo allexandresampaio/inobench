@@ -6,6 +6,7 @@
 package samplerjmeter;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,8 +22,9 @@ import org.bson.Document;
  */
 public class SamplerMongoDB extends AbstractJavaSamplerClient {
 
-    Collection<Document> documentos;
+    ArrayList<Document> documentos;
     LeituraCsv leitor = new LeituraCsv();
+    int i = 0;
 
     //definir os argumentos para acessar o BD
     @Override
@@ -61,9 +63,8 @@ public class SamplerMongoDB extends AbstractJavaSamplerClient {
 
         //
         // Write your test code here.
-        for (Document documento : documentos) {
-            FachadaMongo.getInstancia().insert(documento);
-        }
+        FachadaMongo.getInstancia().insert(documentos.get(i));
+        i++;
 
         //
         result.sampleEnd();

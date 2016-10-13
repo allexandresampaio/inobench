@@ -20,7 +20,7 @@ import org.bson.Document;
  */
 public class LeituraCsv {
 
-    Collection<Document> documentos = new HashSet<>();
+    ArrayList<Document> documentos = new ArrayList<>();
     
     private void criaDocumentos() throws IOException {
         String path = new File("src/arquivos/AirQualityUCI.csv").getCanonicalPath();
@@ -54,7 +54,7 @@ public class LeituraCsv {
         documentos.add(documento);
     }
 
-    public Collection<Document> getDocumentos() throws IOException {
+    public ArrayList<Document> getDocumentos() throws IOException {
         this.criaDocumentos();
         return documentos;
     }
