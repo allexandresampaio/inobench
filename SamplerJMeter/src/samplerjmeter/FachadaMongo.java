@@ -39,7 +39,7 @@ public class FachadaMongo {
         return db;
     }
 
-    public MongoCollection getColecao(String colecao, String HOST, String PORT, String DB_NAME) {
+    public MongoCollection getColecao(String HOST, String PORT, String DB_NAME, String colecao) {
         MongoCollection col = FachadaMongo.getInstancia().getDB(HOST, PORT, DB_NAME).getCollection(colecao);
         return col;
     }
