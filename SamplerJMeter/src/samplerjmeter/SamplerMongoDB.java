@@ -29,7 +29,9 @@ public class SamplerMongoDB extends AbstractJavaSamplerClient {
     @Override
     public Arguments getDefaultParameters() {
         Arguments defaultParameters = new Arguments();
-        //defaultParameters.addArgument("mongo_server", "localhost:27017");
+        defaultParameters.addArgument("host", "localhost");
+        defaultParameters.addArgument("port", "27017");
+        defaultParameters.addArgument("dbName", "teste");
         return defaultParameters;
     }
 
@@ -55,14 +57,18 @@ public class SamplerMongoDB extends AbstractJavaSamplerClient {
     //Here is a typical runTest implementation:
     @Override
     public SampleResult runTest(JavaSamplerContext jsc) {
+        String host = jsc.getParameter("host");
+        String port = jsc.getParameter("port");
+        String dbName = jsc.getParameter("dbName");
+        
         SampleResult result = new SampleResult();
         boolean success = true;
 
         result.sampleStart();
-
+        
         //
         // Write your test code here.
-        FachadaMongo.getInstancia().insert(documentos.get(i));
+        FachadaMongo.getInstancia().insert(host, port, dbName, documentos.get(i));
         i++;
 
         //

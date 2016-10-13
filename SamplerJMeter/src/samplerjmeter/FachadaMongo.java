@@ -18,9 +18,9 @@ public class FachadaMongo {
 
     private static FachadaMongo instancia = null;
 
-    private static final String HOST = "localhost";
-    private static final int PORT = 27017;
-    private static final String DB_NAME = "teste";
+//    private static final String HOST = "localhost";
+//    private static final int PORT = 27017;
+//    private static final String DB_NAME = "teste";
 
     private FachadaMongo() {
     }
@@ -32,18 +32,19 @@ public class FachadaMongo {
         return instancia;
     }
 
-    public MongoDatabase getDB() {
-        MongoClient mongoClient = new MongoClient(HOST, PORT);
+    public MongoDatabase getDB(String HOST, String PORT, String DB_NAME) {
+        int port = Integer.parseInt(PORT);
+        MongoClient mongoClient = new MongoClient(HOST, port);
         MongoDatabase db = mongoClient.getDatabase(DB_NAME);
         return db;
     }
 
-    public MongoCollection getColecao(String colecao) {
-        MongoCollection col = FachadaMongo.getInstancia().getDB().getCollection(colecao);
+    public MongoCollection getColecao(String colecao, String HOST, String PORT, String DB_NAME) {
+        MongoCollection col = FachadaMongo.getInstancia().getDB(HOST, PORT, DB_NAME).getCollection(colecao);
         return col;
     }
 
-    public void insert(Document documento) {
-        this.getColecao("documentos").insertOne(documento);
+    public void insert(String HOST, String PORT, String DB_NAME, Document documento) {
+        this.getColecao(HOST, PORT, DB_NAME, "documentos").insertOne(documento);
     }
 }
