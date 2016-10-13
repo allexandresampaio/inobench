@@ -6,7 +6,7 @@
 package samplerjmeter;
 
 import java.io.IOException;
-import java.util.Collection;
+import java.util.ArrayList;
 import org.bson.Document;
 
 /**
@@ -15,7 +15,7 @@ import org.bson.Document;
  */
 public class TestaLeituraCsv {
     public static void main(String[] args) throws IOException {
-        Collection<Document> array;
+        ArrayList<Document> array;
         LeituraCsv leitor = new LeituraCsv();
         array = leitor.getDocumentos();
         

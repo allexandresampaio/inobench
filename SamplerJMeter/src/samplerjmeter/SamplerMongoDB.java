@@ -7,7 +7,6 @@ package samplerjmeter;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
