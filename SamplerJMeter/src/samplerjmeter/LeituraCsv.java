@@ -6,9 +6,9 @@
 package samplerjmeter;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import org.bson.Document;
 
@@ -21,8 +21,11 @@ public class LeituraCsv {
     ArrayList<Document> documentos = new ArrayList<>();
     
     private void criaDocumentos() throws IOException {
-        String path = new File("src/arquivos/AirQualityUCI.csv").getCanonicalPath();
-        BufferedReader br = new BufferedReader(new FileReader(path));
+        //String path = new File("src/arquivos/AirQualityUCI.csv").getCanonicalPath();
+        //BufferedReader br = new BufferedReader(new FileReader(path));
+        InputStream is = LeituraCsv.class.getResourceAsStream("/arquivos/AirQualityUCI.csv");
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        
         String line = "";
 
         while ((line = br.readLine()) != null) {
