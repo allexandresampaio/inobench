@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package samplerjmeter;
+package samplerCouch;
 
+import samplerMongo.*;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -14,20 +15,20 @@ import org.bson.Document;
  *
  * @author Allexandre
  */
-public class FachadaMongo {
+public class FachadaCouch {
 
-    private static FachadaMongo instancia = null;
+    private static FachadaCouch instancia = null;
 
 //    private static final String HOST = "localhost";
 //    private static final int PORT = 27017;
 //    private static final String DB_NAME = "teste";
 
-    private FachadaMongo() {
+    private FachadaCouch() {
     }
 
-    public static FachadaMongo getInstancia() {
+    public static FachadaCouch getInstancia() {
         if (instancia == null) {
-            instancia = new FachadaMongo();
+            instancia = new FachadaCouch();
         }
         return instancia;
     }
@@ -40,7 +41,7 @@ public class FachadaMongo {
     }
 
     public MongoCollection getColecao(String HOST, String PORT, String DB_NAME, String colecao) {
-        MongoCollection col = FachadaMongo.getInstancia().getDB(HOST, PORT, DB_NAME).getCollection(colecao);
+        MongoCollection col = FachadaCouch.getInstancia().getDB(HOST, PORT, DB_NAME).getCollection(colecao);
         return col;
     }
 
