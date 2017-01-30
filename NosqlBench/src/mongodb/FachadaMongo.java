@@ -47,4 +47,8 @@ public class FachadaMongo {
     public void insert(String HOST, String PORT, String DB_NAME, Document documento) {
         this.getColecao(HOST, PORT, DB_NAME, "documentos").insertOne(documento);
     }
+    
+    public void read(String HOST, String PORT, String DB_NAME){
+        //this.getColecao(HOST, PORT, DB_NAME, "documentos").find(null);
+    }
 }
