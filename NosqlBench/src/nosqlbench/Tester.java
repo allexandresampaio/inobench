@@ -13,7 +13,7 @@ public class Tester {
     public static void main(String[] args) {
         
         NosqlBench tester = new NosqlBench();
-        tester.testar(1, 1, 1, 10);
+        tester.testar(1, 1, 10, 1000);
         
     }
     

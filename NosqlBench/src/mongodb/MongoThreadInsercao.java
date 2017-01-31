@@ -50,6 +50,7 @@ class MongoThreadInsercao extends Thread {
     public void TestarInsercao() {
         for (int x = 0; x < qtdTransacoes; x++) {
             FachadaMongo.getInstancia().insert(host, port, dbName, documentos.get(i));
+            System.out.println("Thread: " + this.nome + ". Inserindo: " + x);
             //verifica se i chegou no fim da amostra
             if (i < 965) {
                 i++;
