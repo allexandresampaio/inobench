@@ -6,6 +6,8 @@
 package nosqlbench;
 
 import couchdb.CouchTest;
+import java.io.IOException;
+import leituraCSV.LeituraCsv;
 import mongodb.MongoTest;
 import redis.RedisTest;
 import riakts.RiakTSTest;
@@ -16,7 +18,7 @@ import riakts.RiakTSTest;
  */
 public class NosqlBench {
     
-    //tipo 1 mongo, 2 couch, 3 redis, 4 riakts
+    //banco 1 mongo, 2 couch, 3 redis, 4 riakts
     private int banco = 0;
     //tipo 1 insercao, tipo 2 consulta
     private int tipo = 0;
@@ -30,8 +32,10 @@ public class NosqlBench {
         this.qtdTransacoes = qtdTransacoes;
     }
     
-    public void testar(int a, int b, int c, int d){
-        configurarPrametros(a, b, c, d);
+    public void testar() throws IOException{
+        LeituraCsv leitor = new LeituraCsv();
+        Parametros p = leitor.getParametros();
+        configurarPrametros(p.getBanco(), p.getTipo(), p.getQtdUsers(), p.getQtdTransacoes());
         
         switch (banco){
             case 1:

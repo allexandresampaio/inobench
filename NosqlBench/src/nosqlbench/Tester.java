@@ -5,15 +5,17 @@
  */
 package nosqlbench;
 
+import java.io.IOException;
+
 /**
  *
  * @author Allexandre
  */
 public class Tester {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         
         NosqlBench tester = new NosqlBench();
-        tester.testar(1, 1, 10, 1000);
+        tester.testar();
         
     }
     

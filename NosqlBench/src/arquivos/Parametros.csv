@@ -1,0 +1,15 @@
+1;1;10;10
+
+# Preencher na primeira linha as informações referentes ao teste na ordem especificada a seguir:
+Banco;Tipo de Teste;Qtd Usuários;Qtd Transações
+
+Banco:
+    1: MongoDB
+    2: CouchDB
+    3: Redis
+    4: RiakTS
+Tipo de Teste:
+    1: Inserção
+    2: Consulta
+Qtd Usuários: livre
+Qtd Transações: livre

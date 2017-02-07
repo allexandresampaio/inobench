@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import nosqlbench.Parametros;
 import org.bson.Document;
 
 /**
@@ -58,5 +59,24 @@ public class LeituraCsv {
     public ArrayList<Document> getDocumentos() throws IOException {
         this.criaDocumentos();
         return documentos;
+    }
+    
+    public Parametros getParametros() throws IOException{
+        InputStream is = LeituraCsv.class.getResourceAsStream("/arquivos/Parametros.csv");
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        
+        String line = "";
+        line = br.readLine();
+        String[] linha = line.split(";");
+        
+        int banco = Integer.parseInt(linha[0]);
+        int tipo = Integer.parseInt(linha[1]);
+        int qtdUsers = Integer.parseInt(linha[2]);
+        int qtdTransacoes = Integer.parseInt(linha[3]);
+        
+        Parametros parametros = new Parametros();
+        parametros.setParametros(banco, tipo, qtdUsers, qtdTransacoes);
+        
+        return parametros;
     }
 }
