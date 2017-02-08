@@ -22,6 +22,7 @@ class MongoThreadInsercao extends Thread {
     private String port = "27017";
     private String dbName = "teste";
     private int i = 0;
+    FachadaMongo fachada;
 
     ArrayList<Document> documentos;
     LeituraCsv leitor = new LeituraCsv();
@@ -35,6 +36,7 @@ class MongoThreadInsercao extends Thread {
     public MongoThreadInsercao(String nome, int qtdTransacoes) {
         /* chamando o construtor de Thread passando o nome da thread como parâmetro */
         super(nome);
+        this.fachada = FachadaMongo.getInstancia();
         this.qtdTransacoes = qtdTransacoes;
         this.nome = nome;
     }
@@ -47,12 +49,14 @@ class MongoThreadInsercao extends Thread {
         }
     }
 
-    public void TestarInsercao() {
+    public void TestarInsercao() throws InterruptedException {
         for (int x = 0; x < qtdTransacoes; x++) {
-            FachadaMongo.getInstancia().insert(host, port, dbName, documentos.get(i));
+            fachada.insert(host, port, dbName, documentos.get(i));
+            
             System.out.println("Thread: " + this.nome + ". Inserindo: " + x);
+            //Thread.sleep(1000);//pausa por 1 segundo
             //verifica se i chegou no fim da amostra
-            if (i < 965) {
+            if (i < 950) {
                 i++;
             } else {
                 i = 0;
@@ -65,6 +69,10 @@ class MongoThreadInsercao extends Thread {
      */
     public void run() {
         this.CriarArray();
-        this.TestarInsercao();
+        try {
+            this.TestarInsercao();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(MongoThreadInsercao.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

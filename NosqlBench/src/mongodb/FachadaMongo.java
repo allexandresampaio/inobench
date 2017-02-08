@@ -5,7 +5,11 @@
  */
 package mongodb;
 
+import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
+import com.mongodb.MongoClientURI;
+import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
@@ -21,7 +25,11 @@ public class FachadaMongo {
 //    private static final String HOST = "localhost";
 //    private static final int PORT = 27017;
 //    private static final String DB_NAME = "teste";
-
+    
+    int port;
+    MongoClient mongoClient;
+    MongoDatabase db;
+    
     private FachadaMongo() {
     }
 
@@ -33,22 +41,28 @@ public class FachadaMongo {
     }
 
     public MongoDatabase getDB(String HOST, String PORT, String DB_NAME) {
-        int port = Integer.parseInt(PORT);
-        MongoClient mongoClient = new MongoClient(HOST, port);
-        MongoDatabase db = mongoClient.getDatabase(DB_NAME);
+        MongoClientOptions.Builder builder = new MongoClientOptions.Builder();
+        //build the connection options  
+        builder.maxConnectionIdleTime(60000);//set the max wait time in (ms) 60 segundos
+        MongoClientOptions opts = builder.build();
+
+        port = Integer.parseInt(PORT);
+        if (mongoClient == null) mongoClient = new MongoClient(new ServerAddress(HOST, port), opts);
+        db = mongoClient.getDatabase(DB_NAME);
+
         return db;
     }
 
     public MongoCollection getColecao(String HOST, String PORT, String DB_NAME, String colecao) {
-        MongoCollection col = FachadaMongo.getInstancia().getDB(HOST, PORT, DB_NAME).getCollection(colecao);
+        MongoCollection col = this.getInstancia().getDB(HOST, PORT, DB_NAME).getCollection(colecao);
         return col;
     }
 
     public void insert(String HOST, String PORT, String DB_NAME, Document documento) {
         this.getColecao(HOST, PORT, DB_NAME, "documentos").insertOne(documento);
     }
-    
-    public void read(String HOST, String PORT, String DB_NAME){
+
+    public void read(String HOST, String PORT, String DB_NAME) {
         //this.getColecao(HOST, PORT, DB_NAME, "documentos").find(null);
     }
 }
