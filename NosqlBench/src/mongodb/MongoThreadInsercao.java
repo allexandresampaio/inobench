@@ -21,7 +21,6 @@ class MongoThreadInsercao extends Thread {
     private String host = "localhost";
     private String port = "27017";
     private String dbName = "teste";
-    private int i = 0;
     FachadaMongo fachada;
 
     ArrayList<Document> documentos;
@@ -50,13 +49,15 @@ class MongoThreadInsercao extends Thread {
     }
 
     public void TestarInsercao() throws InterruptedException {
+        int i = 0;
         for (int x = 0; x < qtdTransacoes; x++) {
-            fachada.insert(host, port, dbName, documentos.get(i));
+            Document documento = documentos.get(i);
+            if (documento.containsKey("_id")) documento.remove("_id");
+            fachada.insert(host, port, dbName, documento);
             
             System.out.println("Thread: " + this.nome + ". Inserindo: " + x);
-            //Thread.sleep(1000);//pausa por 1 segundo
             //verifica se i chegou no fim da amostra
-            if (i < 950) {
+            if (i < 964) {
                 i++;
             } else {
                 i = 0;

@@ -5,11 +5,7 @@
  */
 package mongodb;
 
-import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
-import com.mongodb.MongoClientOptions;
-import com.mongodb.MongoClientURI;
-import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
@@ -41,20 +37,15 @@ public class FachadaMongo {
     }
 
     public MongoDatabase getDB(String HOST, String PORT, String DB_NAME) {
-        MongoClientOptions.Builder builder = new MongoClientOptions.Builder();
-        //build the connection options  
-        builder.maxConnectionIdleTime(60000);//set the max wait time in (ms) 60 segundos
-        MongoClientOptions opts = builder.build();
-
         port = Integer.parseInt(PORT);
-        if (mongoClient == null) mongoClient = new MongoClient(new ServerAddress(HOST, port), opts);
+        if (mongoClient == null) mongoClient = new MongoClient(HOST, port);
         db = mongoClient.getDatabase(DB_NAME);
 
         return db;
     }
 
     public MongoCollection getColecao(String HOST, String PORT, String DB_NAME, String colecao) {
-        MongoCollection col = this.getInstancia().getDB(HOST, PORT, DB_NAME).getCollection(colecao);
+        MongoCollection col = FachadaMongo.getInstancia().getDB(HOST, PORT, DB_NAME).getCollection(colecao);
         return col;
     }
 
