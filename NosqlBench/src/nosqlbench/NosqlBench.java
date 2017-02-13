@@ -25,6 +25,54 @@ public class NosqlBench {
     private int qtdUsers = 0;
     private int qtdTransacoes = 0;
     
+    private long tempoInicial;
+    private long tempoFinal;
+    private double vazao;
+
+    public double getVazao() {
+        return vazao;
+    }
+
+    public void setVazao(double vazao) {
+        this.vazao = vazao;
+    }
+
+    public int getQtdUsers() {
+        return qtdUsers;
+    }
+
+    public void setQtdUsers(int qtdUsers) {
+        this.qtdUsers = qtdUsers;
+    }
+
+    public int getQtdTransacoes() {
+        return qtdTransacoes;
+    }
+
+    public void setQtdTransacoes(int qtdTransacoes) {
+        this.qtdTransacoes = qtdTransacoes;
+    }
+    
+    
+
+    public long getTempoInicial() {
+        return tempoInicial;
+    }
+
+    public void setTempoInicial(long tempoInicial) {
+        this.tempoInicial = tempoInicial;
+    }
+
+    public long getTempoFinal() {
+        return tempoFinal;
+    }
+
+    public void setTempoFinal(long tempoFinal) {
+        this.tempoFinal = tempoFinal;
+    }
+    
+    
+    
     private void configurarPrametros(int banco, int tipo, int qtdUser, int qtdTransacoes){
         this.banco = banco;
         this.tipo = tipo;
@@ -32,7 +80,7 @@ public class NosqlBench {
         this.qtdTransacoes = qtdTransacoes;
     }
     
-    public void testar() throws IOException{
+    public void testar() throws IOException, InterruptedException{
         LeituraCsv leitor = new LeituraCsv();
         Parametros p = leitor.getParametros();
         configurarPrametros(p.getBanco(), p.getTipo(), p.getQtdUsers(), p.getQtdTransacoes());

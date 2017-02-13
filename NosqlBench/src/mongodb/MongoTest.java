@@ -5,6 +5,9 @@
  */
 package mongodb;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Allexandre
@@ -30,15 +33,22 @@ public class MongoTest {
         this.qtdTransacoes = qtdTransacoes;
     }
 
-    public void testarInsercao() {
-        for (int i = 0; i < qtdUser; i++){
-            new MongoThreadInsercao("user_"+i, qtdTransacoes).start();
+    public void testarInsercao() throws InterruptedException {
+        List threads = new ArrayList();//lista para guardar threads em execução
+        for (int i = 0; i < qtdUser; i++) {
+            MongoThreadInsercao thread = new MongoThreadInsercao("user_" + i, qtdTransacoes);
+            thread.start();
+            threads.add(thread);
+        }
+        //esperando por todas as threads finalizarem pra dar continuidade
+        for (int i = 0; i < threads.size(); i++) {
+            ((Thread) threads.get(i)).join();
         }
     }
 
     public void testarConsulta() {
-        for (int i = 0; i < qtdUser; i++){
-            new MongoThreadConsulta("user_"+i, qtdTransacoes).start();
+        for (int i = 0; i < qtdUser; i++) {
+            new MongoThreadConsulta("user_" + i, qtdTransacoes).start();
         }
     }
 
