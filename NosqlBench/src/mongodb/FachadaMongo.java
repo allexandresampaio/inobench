@@ -5,9 +5,11 @@
  */
 package mongodb;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import static com.mongodb.client.model.Filters.eq;
 import org.bson.Document;
 
 /**
@@ -54,8 +56,13 @@ public class FachadaMongo {
         this.getColecao(HOST, PORT, DB_NAME, "documentos").insertOne(documento);
     }
 
-    public void read(String HOST, String PORT, String DB_NAME) {
-        //this.getColecao(HOST, PORT, DB_NAME, "documentos").find(null);
+    public void read(String HOST, String PORT, String DB_NAME, String date, String time) {
+        BasicDBObject includeKeys = new BasicDBObject();
+        includeKeys.append("date", date);
+        includeKeys.append("time", time);
+        
+        Object doc = this.getColecao(HOST, PORT, DB_NAME, "documentos").find(includeKeys).first();
+        System.out.println(doc);
     }
 
 }
