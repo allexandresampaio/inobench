@@ -16,18 +16,14 @@ public class Tester {
     public static void main(String[] args) throws IOException, InterruptedException {
 
         NosqlBench tester = new NosqlBench();
-        tester.setTempoInicial(System.currentTimeMillis());
+        tester.preTeste();
         tester.testar();
-        tester.setTempoFinal(System.currentTimeMillis());
+        tester.posTeste();
         System.out.println("Início: " + tester.getTempoInicial());
         System.out.println("Final: " + tester.getTempoFinal());
-        double tempo = tester.getTempoFinal() - tester.getTempoInicial();
-        System.out.println("Tempo: " + tempo);
-        long users = tester.getQtdUsers();
-        long transacoes = tester.getQtdTransacoes();
-        double vazao = (transacoes*users)/tempo;
-        tester.setVazao(vazao);
-        System.out.println("Vazão: " + tester.getVazao());
+        System.out.println("Tempo: " + tester.getDuracao() + " segundos.");
+        System.out.println("Vazão: " + tester.getVazao() + " inserções por segundo.");
+        System.out.println("Erros: " + tester.getErros());
     }
 
 }

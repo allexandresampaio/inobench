@@ -21,11 +21,10 @@ public class FachadaMongo {
 //    private static final String HOST = "localhost";
 //    private static final int PORT = 27017;
 //    private static final String DB_NAME = "teste";
-    
     int port;
     MongoClient mongoClient;
     MongoDatabase db;
-    
+
     private FachadaMongo() {
     }
 
@@ -38,7 +37,9 @@ public class FachadaMongo {
 
     public MongoDatabase getDB(String HOST, String PORT, String DB_NAME) {
         port = Integer.parseInt(PORT);
-        if (mongoClient == null) mongoClient = new MongoClient(HOST, port);
+        if (mongoClient == null) {
+            mongoClient = new MongoClient(HOST, port);
+        }
         db = mongoClient.getDatabase(DB_NAME);
 
         return db;
@@ -56,4 +57,5 @@ public class FachadaMongo {
     public void read(String HOST, String PORT, String DB_NAME) {
         //this.getColecao(HOST, PORT, DB_NAME, "documentos").find(null);
     }
+
 }

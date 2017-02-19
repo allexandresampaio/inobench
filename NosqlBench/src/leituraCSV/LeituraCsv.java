@@ -6,6 +6,8 @@
 package leituraCSV;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -20,19 +22,21 @@ import org.bson.Document;
 public class LeituraCsv {
 
     ArrayList<Document> documentos = new ArrayList<>();
-    
+
     private void criaDocumentos() throws IOException {
         //String path = new File("src/arquivos/AirQualityUCI.csv").getCanonicalPath();
         //BufferedReader br = new BufferedReader(new FileReader(path));
         InputStream is = LeituraCsv.class.getResourceAsStream("/arquivos/AirQualityUCI.csv");
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
-        
+
         String line = "";
 
         while ((line = br.readLine()) != null) {
             String[] linha = line.split(";");
             this.insereDocumento(linha);
         }
+        
+        br.close();
     }
 
     private void insereDocumento(String[] linha) {
@@ -60,23 +64,38 @@ public class LeituraCsv {
         this.criaDocumentos();
         return documentos;
     }
-    
-    public Parametros getParametros() throws IOException{
+
+    public Parametros getParametros() throws IOException {
         InputStream is = LeituraCsv.class.getResourceAsStream("/arquivos/Parametros.csv");
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
-        
+
         String line = "";
         line = br.readLine();
         String[] linha = line.split(";");
-        
+
         int banco = Integer.parseInt(linha[0]);
         int tipo = Integer.parseInt(linha[1]);
         int qtdUsers = Integer.parseInt(linha[2]);
         int qtdTransacoes = Integer.parseInt(linha[3]);
-        
+
         Parametros parametros = new Parametros();
         parametros.setParametros(banco, tipo, qtdUsers, qtdTransacoes);
-        
+
         return parametros;
+    }
+
+    public void gravarResultados(int banco, int qtdUsers, int qtdTransacoes, int tipo, long tempoInicial, long tempoFinal, long duracao, double vazao, int erros) {
+        String conteudo = banco+";"+qtdUsers+";"+qtdTransacoes+";"+tipo+";"+
+                tempoInicial+";"+tempoFinal+";"+duracao+";"+vazao+";"+erros+";";
+
+        try { // o true significa q o arquivo será constante 
+            File arquivo = new File("src/arquivos/Resultados.csv");
+            FileWriter x = new FileWriter(arquivo, true);
+            conteudo += "\n"; // criando nova linha e recuo no arquivo 
+            x.append(conteudo); // armazena o texto no objeto x, que aponta para o arquivo
+            x.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

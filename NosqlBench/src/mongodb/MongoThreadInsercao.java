@@ -27,8 +27,8 @@ class MongoThreadInsercao extends Thread {
     LeituraCsv leitor = new LeituraCsv();
 
     String nome;
-    int qtdTransacoes;	
-
+    int qtdTransacoes;
+    
     /**
      * Construtor da classe.
      */
@@ -53,7 +53,12 @@ class MongoThreadInsercao extends Thread {
         for (int x = 0; x < qtdTransacoes; x++) {
             Document documento = documentos.get(i);
             if (documento.containsKey("_id")) documento.remove("_id");
-            fachada.insert(host, port, dbName, documento);
+            
+            try {
+                fachada.insert(host, port, dbName, documento);
+            } catch (Exception e) {
+                Erro.getInstancia().marcaErro();
+            }
             
             System.out.println("Thread: " + this.nome + ". Inserindo: " + x);
             //verifica se i chegou no fim da amostra
