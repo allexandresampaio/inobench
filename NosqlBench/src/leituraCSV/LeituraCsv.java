@@ -37,6 +37,7 @@ public class LeituraCsv {
         }
         
         br.close();
+        is.close();
     }
 
     private void insereDocumento(String[] linha) {
@@ -89,11 +90,13 @@ public class LeituraCsv {
                 tempoInicial+";"+tempoFinal+";"+duracao+";"+vazao+";"+erros+";";
 
         try { // o true significa q o arquivo será constante 
-            File arquivo = new File("src/arquivos/Resultados.csv");
+            File arquivo = new File("Resultados.csv");
             FileWriter x = new FileWriter(arquivo, true);
+            
             conteudo += "\n"; // criando nova linha e recuo no arquivo 
             x.append(conteudo); // armazena o texto no objeto x, que aponta para o arquivo
             x.close();
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
