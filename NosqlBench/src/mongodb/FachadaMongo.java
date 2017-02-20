@@ -9,7 +9,6 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import static com.mongodb.client.model.Filters.eq;
 import org.bson.Document;
 
 /**
