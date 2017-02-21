@@ -28,15 +28,15 @@ public class NosqlBench {
 
     private long tempoInicial;
     private long tempoFinal;
-    private long duracao;
+    private double duracao;
     private double vazao;
     private int erros;
 
-    public long getDuracao() {
+    public double getDuracao() {
         return duracao;
     }
 
-    public void setDuracao(long duracao) {
+    public void setDuracao(double duracao) {
         this.duracao = duracao;
     }
     
@@ -105,7 +105,7 @@ public class NosqlBench {
     public void posTeste(){
         this.setTempoFinal(System.currentTimeMillis());
         this.setErros(Erro.getInstancia().getErros());
-        this.setDuracao((this.getTempoFinal()-this.getTempoInicial())/1000);
+        this.setDuracao((this.getTempoFinal()-this.getTempoInicial())/1000.0);
         this.setVazao();  
         LeituraCsv leitor = new LeituraCsv();
         leitor.gravarResultados(this.banco, this.qtdUsers, this.qtdTransacoes, this.tipo, this.tempoInicial, this.tempoFinal, this.duracao, this.vazao, this.erros);

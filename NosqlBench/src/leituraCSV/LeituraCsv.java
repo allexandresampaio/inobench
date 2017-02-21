@@ -85,7 +85,7 @@ public class LeituraCsv {
         return parametros;
     }
 
-    public void gravarResultados(int banco, int qtdUsers, int qtdTransacoes, int tipo, long tempoInicial, long tempoFinal, long duracao, double vazao, int erros) {
+    public void gravarResultados(int banco, int qtdUsers, int qtdTransacoes, int tipo, long tempoInicial, long tempoFinal, double duracao, double vazao, int erros) {
         String conteudo = banco+";"+qtdUsers+";"+qtdTransacoes+";"+tipo+";"+
                 tempoInicial+";"+tempoFinal+";"+duracao+";"+vazao+";"+erros+";";
 
