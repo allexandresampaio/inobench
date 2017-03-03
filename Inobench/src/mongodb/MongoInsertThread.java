@@ -63,6 +63,7 @@ class MongoInsertThread extends Thread {
             
             System.out.println("Thread: " + this.nome + ". Inserindo: " + x);
             //verifica se i chegou no fim da amostra
+            //TODO deixar isso dinâmico p/ usar novos datasets
             if (i < 964) {
                 i++;
             } else {

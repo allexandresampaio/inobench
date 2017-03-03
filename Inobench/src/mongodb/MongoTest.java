@@ -58,5 +58,4 @@ public class MongoTest {
             ((Thread) threads.get(i)).join();
         }
     }
-
 }
