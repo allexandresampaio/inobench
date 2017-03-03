@@ -5,6 +5,7 @@
  */
 package mongodb;
 
+import core.Erro;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;

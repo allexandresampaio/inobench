@@ -8,7 +8,6 @@ package core;
 import couchdb.CouchTest;
 import java.io.IOException;
 import CSVreader.LeituraCsv;
-import mongodb.Erro;
 import mongodb.MongoTest;
 import redis.RedisTest;
 import riakts.RiakTSTest;
