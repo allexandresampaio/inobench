@@ -7,7 +7,7 @@ package core;
 
 import couchdb.CouchTest;
 import java.io.IOException;
-import CSVreader.LeituraCsv;
+import CSVreader.CSVReader;
 import mongodb.MongoTest;
 import redis.RedisTest;
 import riakts.RiakTSTest;
@@ -97,22 +97,22 @@ public class Inobench {
     }
     
     public void preTeste(){
-        Erro.getInstancia().setErro(0);
+        Errors.getInstancia().setErro(0);
         this.setTempoInicial(System.currentTimeMillis());
     }
     
     public void posTeste(){
         this.setTempoFinal(System.currentTimeMillis());
-        this.setErros(Erro.getInstancia().getErros());
+        this.setErros(Errors.getInstancia().getErros());
         this.setDuracao((this.getTempoFinal()-this.getTempoInicial())/1000.0);
         this.setVazao();  
-        LeituraCsv leitor = new LeituraCsv();
+        CSVReader leitor = new CSVReader();
         leitor.gravarResultados(this.banco, this.qtdUsers, this.qtdTransacoes, this.tipo, this.tempoInicial, this.tempoFinal, this.duracao, this.vazao, this.erros);
     }
 
     public void testar() throws IOException, InterruptedException {
-        LeituraCsv leitor = new LeituraCsv();
-        Parametros p = leitor.getParametros();
+        CSVReader leitor = new CSVReader();
+        Parameters p = leitor.getParametros();
         configurarPrametros(p.getBanco(), p.getTipo(), p.getQtdUsers(), p.getQtdTransacoes());
 
         switch (banco) {

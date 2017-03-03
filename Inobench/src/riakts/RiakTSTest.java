@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import CSVreader.LeituraCsv;
+import CSVreader.CSVReader;
 import org.bson.Document;
 
 /**
@@ -43,7 +43,7 @@ public class RiakTSTest {
     }
 
     ArrayList<Document> documentos;
-    LeituraCsv leitor = new LeituraCsv();
+    CSVReader leitor = new CSVReader();
     
     public void testarInsercao() {
         try {

@@ -36,7 +36,7 @@ public class MongoTest {
     public void testarInsercao() throws InterruptedException {
         List threads = new ArrayList();//lista para guardar threads em execução
         for (int i = 0; i < qtdUser; i++) {
-            MongoThreadInsercao thread = new MongoThreadInsercao("user_" + i, qtdTransacoes);
+            MongoInsertThread thread = new MongoInsertThread("user_" + i, qtdTransacoes);
             thread.start();
             threads.add(thread);
         }
@@ -49,7 +49,7 @@ public class MongoTest {
     public void testarConsulta() throws InterruptedException {
         List threads = new ArrayList();//lista para guardar threads em execução
         for (int i = 0; i < qtdUser; i++) {
-            MongoThreadConsulta thread = new MongoThreadConsulta("user_" + i, qtdTransacoes);
+            MongoReadThread thread = new MongoReadThread("user_" + i, qtdTransacoes);
             thread.start();
             threads.add(thread);
         }

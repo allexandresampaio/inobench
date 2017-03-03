@@ -15,9 +15,9 @@ import org.bson.Document;
  *
  * @author Allexandre
  */
-public class FachadaMongo {
+public class MongoFacade {
 
-    private static FachadaMongo instancia = null;
+    private static MongoFacade instancia = null;
 
 //    private static final String HOST = "localhost";
 //    private static final int PORT = 27017;
@@ -26,12 +26,12 @@ public class FachadaMongo {
     MongoClient mongoClient;
     MongoDatabase db;
 
-    private FachadaMongo() {
+    private MongoFacade() {
     }
 
-    public static FachadaMongo getInstancia() {
+    public static MongoFacade getInstancia() {
         if (instancia == null) {
-            instancia = new FachadaMongo();
+            instancia = new MongoFacade();
         }
         return instancia;
     }
@@ -47,7 +47,7 @@ public class FachadaMongo {
     }
 
     public MongoCollection getColecao(String HOST, String PORT, String DB_NAME, String colecao) {
-        MongoCollection col = FachadaMongo.getInstancia().getDB(HOST, PORT, DB_NAME).getCollection(colecao);
+        MongoCollection col = MongoFacade.getInstancia().getDB(HOST, PORT, DB_NAME).getCollection(colecao);
         return col;
     }
 

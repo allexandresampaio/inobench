@@ -12,21 +12,21 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import core.Parametros;
+import core.Parameters;
 import org.bson.Document;
 
 /**
  *
  * @author Allexandre
  */
-public class LeituraCsv {
+public class CSVReader {
 
     ArrayList<Document> documentos = new ArrayList<>();
 
     private void criaDocumentos() throws IOException {
         //String path = new File("src/arquivos/AirQualityUCI.csv").getCanonicalPath();
         //BufferedReader br = new BufferedReader(new FileReader(path));
-        InputStream is = LeituraCsv.class.getResourceAsStream("/arquivos/AirQualityUCI.csv");
+        InputStream is = CSVReader.class.getResourceAsStream("/arquivos/AirQualityUCI.csv");
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
         String line = "";
@@ -66,8 +66,8 @@ public class LeituraCsv {
         return documentos;
     }
 
-    public Parametros getParametros() throws IOException {
-        InputStream is = LeituraCsv.class.getResourceAsStream("/arquivos/Parametros.csv");
+    public Parameters getParametros() throws IOException {
+        InputStream is = CSVReader.class.getResourceAsStream("/arquivos/Parameters.csv");
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
         String line = "";
@@ -79,7 +79,7 @@ public class LeituraCsv {
         int qtdUsers = Integer.parseInt(linha[2]);
         int qtdTransacoes = Integer.parseInt(linha[3]);
 
-        Parametros parametros = new Parametros();
+        Parameters parametros = new Parameters();
         parametros.setParametros(banco, tipo, qtdUsers, qtdTransacoes);
 
         return parametros;
@@ -90,7 +90,7 @@ public class LeituraCsv {
                 tempoInicial+";"+tempoFinal+";"+duracao+";"+vazao+";"+erros+";";
 
         try { // o true significa q o arquivo será constante 
-            File arquivo = new File("Resultados.csv");
+            File arquivo = new File("Results.csv");
             FileWriter x = new FileWriter(arquivo, true);
             
             conteudo += "\n"; // criando nova linha e recuo no arquivo 

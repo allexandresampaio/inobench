@@ -9,7 +9,7 @@ package core;
  *
  * @author Allexandre
  */
-public class Parametros {
+public class Parameters {
     
     //tipo 1 mongo, 2 couch, 3 redis, 4 riakts
     private int banco = 0;

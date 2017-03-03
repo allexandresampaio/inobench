@@ -9,18 +9,18 @@ package core;
  *
  * @author allexandre
  */
-public class Erro {
+public class Errors {
     
     private int erros;
-    private static Erro instancia = null;
+    private static Errors instancia = null;
     
-    private Erro(){
+    private Errors(){
         
     } 
     
-    public static Erro getInstancia() {
+    public static Errors getInstancia() {
         if (instancia == null) {
-            instancia = new Erro();
+            instancia = new Errors();
         }
         return instancia;
     }
