@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package nosqlbench;
+package inobench;
 
 import couchdb.CouchTest;
 import java.io.IOException;
-import leituraCSV.LeituraCsv;
+import CSVreader.LeituraCsv;
 import mongodb.Erro;
 import mongodb.MongoTest;
 import redis.RedisTest;
@@ -17,7 +17,7 @@ import riakts.RiakTSTest;
  *
  * @author Allexandre
  */
-public class NosqlBench {
+public class Inobench {
 
     //banco 1 mongo, 2 couch, 3 redis, 4 riakts
     private int banco = 0;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package nosqlbench;
+package inobench;
 
 import java.io.IOException;
 
@@ -15,7 +15,7 @@ public class Tester {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        NosqlBench tester = new NosqlBench();
+        Inobench tester = new Inobench();
         tester.preTeste();
         tester.testar();
         tester.posTeste();

@@ -3,21 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package riakts;
+package redis;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import leituraCSV.LeituraCsv;
+import CSVreader.LeituraCsv;
 import org.bson.Document;
 
 /**
  *
  * @author Allexandre
  */
-public class RiakTSTest {
-    
+public class RedisTest {
+
     private String host = "localhost";
     private String port = "27017";
     private String dbName = "teste";
@@ -44,15 +44,16 @@ public class RiakTSTest {
 
     ArrayList<Document> documentos;
     LeituraCsv leitor = new LeituraCsv();
-    
+
     public void testarInsercao() {
+
         try {
             documentos = leitor.getDocumentos();
         } catch (IOException ex) {
-            Logger.getLogger(RiakTSTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RedisTest.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        //TODO fazer nova fachada
+        //TODO fazer fachada nova
         //FachadaMongo.getInstancia().insert(host, port, dbName, documentos.get(i));
     }
 
