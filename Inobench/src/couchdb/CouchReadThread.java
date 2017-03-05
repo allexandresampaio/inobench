@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mongodb;
+package couchdb;
 
 import core.Errors;
 import java.io.IOException;
@@ -17,13 +17,9 @@ import org.bson.Document;
  *
  * @author Allexandre
  */
-class MongoReadThread extends Thread {
+class CouchReadThread extends Thread {
 
-    private String host = "localhost";
-    private String port = "27017";
-    private String dbName = "teste";
-    MongoFacade fachada;
-
+    CouchFacade fachada;
     String nome;
     int qtdTransacoes;
 
@@ -33,10 +29,10 @@ class MongoReadThread extends Thread {
     /**
      * Construtor da classe.
      */
-    public MongoReadThread(String nome, int qtdTransacoes) {
+    public CouchReadThread(String nome, int qtdTransacoes) {
         /* chamando o construtor de Thread passando o nome da thread como parâmetro */
         super(nome);
-        this.fachada = MongoFacade.getInstancia();
+        this.fachada = CouchFacade.getInstancia();
         this.qtdTransacoes = qtdTransacoes;
         this.nome = nome;
     }
@@ -45,7 +41,7 @@ class MongoReadThread extends Thread {
         try {
             documentos = leitor.getDocumentos();
         } catch (IOException ex) {
-            Logger.getLogger(MongoTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CouchTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -55,7 +51,7 @@ class MongoReadThread extends Thread {
             Document documento = documentos.get(i);
             
             try {
-                fachada.read(host, port, dbName, documento.getString("date"), documento.getString("time"));
+                fachada.read(documento.getString("date"), documento.getString("time"));
             } catch (Exception e) {
                 Errors.getInstancia().marcaErro();
             }
@@ -78,7 +74,7 @@ class MongoReadThread extends Thread {
         try {
             this.TestarConsulta();
         } catch (Exception e) {
-            Logger.getLogger(MongoReadThread.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(CouchReadThread.class.getName()).log(Level.SEVERE, null, e);
         }
         
     }

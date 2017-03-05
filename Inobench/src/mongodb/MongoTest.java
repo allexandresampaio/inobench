@@ -41,8 +41,8 @@ public class MongoTest {
             threads.add(thread);
         }
         //esperando por todas as threads finalizarem pra dar continuidade
-        for (int i = 0; i < threads.size(); i++) {
-            ((Thread) threads.get(i)).join();
+        for (Object thread : threads) {
+            ((Thread) thread).join();
         }
     }
 
@@ -54,8 +54,8 @@ public class MongoTest {
             threads.add(thread);
         }
         //esperando por todas as threads finalizarem pra dar continuidade
-        for (int i = 0; i < threads.size(); i++) {
-            ((Thread) threads.get(i)).join();
+        for (Object thread : threads) {
+            ((Thread) thread).join();
         }
     }
 }

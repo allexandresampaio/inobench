@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mongodb;
+package couchdb;
 
 import core.Errors;
 import java.io.IOException;
@@ -17,51 +17,50 @@ import org.bson.Document;
  *
  * @author Allexandre
  */
-class MongoReadThread extends Thread {
+class CouchInsertThread extends Thread {
 
-    private String host = "localhost";
-    private String port = "27017";
-    private String dbName = "teste";
-    MongoFacade fachada;
-
-    String nome;
-    int qtdTransacoes;
+    CouchFacade fachada;
 
     ArrayList<Document> documentos;
     CSVReader leitor = new CSVReader();
 
+    String nome;
+    int qtdTransacoes;
+    
     /**
      * Construtor da classe.
      */
-    public MongoReadThread(String nome, int qtdTransacoes) {
+    public CouchInsertThread(String nome, int qtdTransacoes) {
         /* chamando o construtor de Thread passando o nome da thread como parâmetro */
         super(nome);
-        this.fachada = MongoFacade.getInstancia();
+        this.fachada = CouchFacade.getInstancia();
         this.qtdTransacoes = qtdTransacoes;
         this.nome = nome;
     }
-    
+
     public void CriarArray() {
         try {
             documentos = leitor.getDocumentos();
         } catch (IOException ex) {
-            Logger.getLogger(MongoTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CouchTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void TestarConsulta() {
+    public void TestarInsercao() throws InterruptedException {
         int i = 0;
         for (int x = 0; x < qtdTransacoes; x++) {
             Document documento = documentos.get(i);
+            if (documento.containsKey("_id")) documento.remove("_id");
             
             try {
-                fachada.read(host, port, dbName, documento.getString("date"), documento.getString("time"));
+                fachada.insert(documento);
             } catch (Exception e) {
                 Errors.getInstancia().marcaErro();
             }
             
-            System.out.println("Thread: " + this.nome + ". Lendo: " + x);
+            System.out.println("Thread: " + this.nome + ". Inserindo: " + x);
             //verifica se i chegou no fim da amostra
+            //TODO deixar isso dinâmico p/ usar novos datasets
             if (i < documentos.size()-1) {
                 i++;
             } else {
@@ -76,10 +75,9 @@ class MongoReadThread extends Thread {
     public void run() {
         this.CriarArray();
         try {
-            this.TestarConsulta();
-        } catch (Exception e) {
-            Logger.getLogger(MongoReadThread.class.getName()).log(Level.SEVERE, null, e);
+            this.TestarInsercao();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(CouchInsertThread.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
 }

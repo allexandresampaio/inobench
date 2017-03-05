@@ -5,24 +5,15 @@
  */
 package couchdb;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import CSVreader.CSVReader;
-import org.bson.Document;
+import java.util.List;
 
 /**
  *
  * @author Allexandre
  */
 public class CouchTest {
-    
-    private String host = "localhost";
-    private String port = "27017";
-    private String dbName = "teste";
-    private int i = 0;
-    
+
     private int qtdUser;
     private int qtdTransacoes;
 
@@ -42,23 +33,29 @@ public class CouchTest {
         this.qtdTransacoes = qtdTransacoes;
     }
 
-    ArrayList<Document> documentos;
-    CSVReader leitor = new CSVReader();  
-    
-    public void testarInsercao() {
-        try {
-            documentos = leitor.getDocumentos();
-        } catch (IOException ex) {
-            Logger.getLogger(CouchTest.class.getName()).log(Level.SEVERE, null, ex);
+    public void testarInsercao() throws InterruptedException {
+        List threads = new ArrayList();//lista para guardar threads em execução
+        for (int i = 0; i < qtdUser; i++) {
+            CouchInsertThread thread = new CouchInsertThread("user_" + i, qtdTransacoes);
+            thread.start();
+            threads.add(thread);
         }
-        
-        //TODO FAZER FACHADA NOVA
-        //FachadaMongo.getInstancia().insert(host, port, dbName, documentos.get(i));
+        //esperando por todas as threads finalizarem pra dar continuidade
+        for (Object thread : threads) {
+            ((Thread) thread).join();
+        }
     }
 
-    public void testarConsulta() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void testarConsulta() throws InterruptedException {
+        List threads = new ArrayList();//lista para guardar threads em execução
+        for (int i = 0; i < qtdUser; i++) {
+            CouchReadThread thread = new CouchReadThread("user_" + i, qtdTransacoes);
+            thread.start();
+            threads.add(thread);
+        }
+        //esperando por todas as threads finalizarem pra dar continuidade
+        for (Object thread : threads) {
+            ((Thread) thread).join();
+        }
     }
-
-
 }

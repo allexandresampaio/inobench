@@ -26,7 +26,7 @@ public class CSVReader {
     private void criaDocumentos() throws IOException {
         //String path = new File("src/arquivos/AirQualityUCI.csv").getCanonicalPath();
         //BufferedReader br = new BufferedReader(new FileReader(path));
-        InputStream is = CSVReader.class.getResourceAsStream("/arquivos/AirQualityUCI.csv");
+        InputStream is = CSVReader.class.getResourceAsStream("/files/AirQualityUCI.csv");
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
         String line = "";
@@ -67,7 +67,7 @@ public class CSVReader {
     }
 
     public Parameters getParametros() throws IOException {
-        InputStream is = CSVReader.class.getResourceAsStream("/arquivos/Parameters.csv");
+        InputStream is = CSVReader.class.getResourceAsStream("/files/Parameters.csv");
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
         String line = "";
