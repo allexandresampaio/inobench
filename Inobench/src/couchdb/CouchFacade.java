@@ -5,11 +5,6 @@
  */
 package couchdb;
 
-import mongodb.*;
-import com.mongodb.BasicDBObject;
-import com.mongodb.MongoClient;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.lightcouch.CouchDbClient;
 
@@ -35,7 +30,7 @@ public class CouchFacade {
     // couchdb-2.properties is on the classpath
     public CouchDbClient getDB(){
         if (couchClient == null){
-            couchClient = new CouchDbClient("/files/couchdb.properties");
+            couchClient = new CouchDbClient("db-teste", true, "http", "127.0.0.1", 5984, "", "");
         }
         return couchClient;
     }
