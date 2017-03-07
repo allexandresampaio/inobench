@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import CSVreader.CSVReader;
+import CSVreader.CSVReaderToDocument;
 import org.bson.Document;
 
 /**
@@ -24,7 +24,7 @@ class CouchbaseReadThread extends Thread {
     int qtdTransacoes;
 
     ArrayList<Document> documentos;
-    CSVReader leitor = new CSVReader();
+    CSVReaderToDocument leitor = new CSVReaderToDocument();
 
     /**
      * Construtor da classe.

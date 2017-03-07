@@ -6,7 +6,7 @@
 package core;
 
 import java.io.IOException;
-import CSVreader.CSVReader;
+import CSVreader.CSVReaderToDocument;
 import couchbase.CouchbaseTest;
 import mongodb.MongoTest;
 import redis.RedisTest;
@@ -106,12 +106,12 @@ public class Inobench {
         this.setErros(Errors.getInstancia().getErros());
         this.setDuracao((this.getTempoFinal()-this.getTempoInicial())/1000.0);
         this.setVazao();  
-        CSVReader leitor = new CSVReader();
+        CSVReaderToDocument leitor = new CSVReaderToDocument();
         leitor.gravarResultados(this.banco, this.qtdUsers, this.qtdTransacoes, this.tipo, this.tempoInicial, this.tempoFinal, this.duracao, this.vazao, this.erros);
     }
 
     public void testar() throws IOException, InterruptedException {
-        CSVReader leitor = new CSVReader();
+        CSVReaderToDocument leitor = new CSVReaderToDocument();
         Parameters p = leitor.getParametros();
         configurarPrametros(p.getBanco(), p.getTipo(), p.getQtdUsers(), p.getQtdTransacoes());
 

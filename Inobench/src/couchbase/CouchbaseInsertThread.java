@@ -10,7 +10,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import CSVreader.CSVReader;
+import CSVreader.CSVReaderToDocument;
+import CSVreader.CSVReaderToJSon;
+import com.couchbase.client.java.document.json.JsonObject;
 import org.bson.Document;
 
 /**
@@ -21,8 +23,8 @@ class CouchbaseInsertThread extends Thread {
 
     CouchbaseFacade fachada;
 
-    ArrayList<Document> documentos;
-    CSVReader leitor = new CSVReader();
+    ArrayList<JsonObject> documentos;
+    CSVReaderToJSon leitor = new CSVReaderToJSon();
 
     String nome;
     int qtdTransacoes;
@@ -49,8 +51,8 @@ class CouchbaseInsertThread extends Thread {
     public void TestarInsercao() throws InterruptedException {
         int i = 0;
         for (int x = 0; x < qtdTransacoes; x++) {
-            Document documento = documentos.get(i);
-            if (documento.containsKey("_id")) documento.remove("_id");
+            JsonObject documento = documentos.get(i);
+            if (documento.containsKey("_id")) documento.removeKey("_id");
             
             try {
                 fachada.insert(documento);

@@ -5,6 +5,7 @@
  */
 package CSVreader;
 
+import com.couchbase.client.java.document.json.JsonObject;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
@@ -13,20 +14,17 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import core.Parameters;
-import org.bson.Document;
 
 /**
  *
  * @author Allexandre
  */
-public class CSVReader {
+public class CSVReaderToJSon {
 
-    ArrayList<Document> documentos = new ArrayList<>();
+    ArrayList<JsonObject> documentos = new ArrayList<>();
 
     private void criaDocumentos() throws IOException {
-        //String path = new File("src/arquivos/AirQualityUCI.csv").getCanonicalPath();
-        //BufferedReader br = new BufferedReader(new FileReader(path));
-        InputStream is = CSVReader.class.getResourceAsStream("/files/AirQualityUCI.csv");
+        InputStream is = CSVReaderToJSon.class.getResourceAsStream("/files/AirQualityUCI.csv");
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
         String line = "";
@@ -41,33 +39,32 @@ public class CSVReader {
     }
 
     private void insereDocumento(String[] linha) {
-        Document documento = new Document();
-        documento.append("date", linha[0]).
-                append("time", linha[1]).
-                append("s1", linha[2]).
-                append("s2", linha[3]).
-                append("s3", linha[4]).
-                append("s4", linha[5]).
-                append("s5", linha[6]).
-                append("s6", linha[7]).
-                append("s7", linha[8]).
-                append("s8", linha[9]).
-                append("s9", linha[10]).
-                append("s10", linha[11]).
-                append("s11", linha[12]).
-                append("s12", linha[13]).
-                append("s13", linha[14]);
-
-        documentos.add(documento);
+        JsonObject doc = JsonObject.empty()
+                .put("date", linha[0])
+                .put("time", linha[1])
+                .put("s1", linha[2])
+                .put("s2", linha[3])
+                .put("s3", linha[4])
+                .put("s4", linha[5])
+                .put("s5", linha[6])
+                .put("s6", linha[7])
+                .put("s7", linha[8])
+                .put("s8", linha[9])
+                .put("s9", linha[10])
+                .put("s10", linha[11])
+                .put("s11", linha[12])
+                .put("s12", linha[13])
+                .put("s13", linha[14]);
+        documentos.add(doc);
     }
 
-    public ArrayList<Document> getDocumentos() throws IOException {
+    public ArrayList<JsonObject> getDocumentos() throws IOException {
         this.criaDocumentos();
         return documentos;
     }
 
     public Parameters getParametros() throws IOException {
-        InputStream is = CSVReader.class.getResourceAsStream("/files/Parameters.csv");
+        InputStream is = CSVReaderToJSon.class.getResourceAsStream("/files/Parameters.csv");
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
         String line = "";
