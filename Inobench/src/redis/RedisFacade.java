@@ -3,46 +3,50 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package couchbase;
+package redis;
 
 import com.couchbase.client.java.*;
 import com.couchbase.client.java.document.JsonDocument;
 import com.couchbase.client.java.document.json.JsonObject;
+import org.bson.Document;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 /**
  *
  * @author Allexandre
  */
-public class CouchbaseFacade {
+public class RedisFacade {
 
-    private static CouchbaseFacade instancia = null;
+    private static RedisFacade instancia = null;
     // Initialize the Connection
-    Cluster cluster = CouchbaseCluster.create("localhost");
-    Bucket bucket;
+    JedisPool pool = new JedisPool("localhost");
+    Jedis jedis;
     int i = 0;
 
-    private CouchbaseFacade() {
+    private RedisFacade() {
     }
 
-    public static CouchbaseFacade getInstancia() {
+    public static RedisFacade getInstancia() {
         if (instancia == null) {
-            instancia = new CouchbaseFacade();
+            instancia = new RedisFacade();
         }
         return instancia;
     }
 
     // couchdb-2.properties is on the classpath
-    public Bucket getDB() {
-        if (bucket == null) {
-            bucket = cluster.openBucket("default");
+    public Jedis getDB() {
+        if (jedis == null) {
+            jedis = pool.getResource();
         }
-        return bucket;
+        return jedis;
     }
 
     //cria um _id pra ser usado novamente quando for buscar os documentos
-    public void insert(JsonObject documento) {
-        this.getDB().upsert(JsonDocument.create(i+documento.getString("date")
-                + documento.getString("time"), documento));
+    public void insert(Document d) {
+        String key = i+d.getString(0)+d.getString(1);
+        String value = d.toString();
+        this.getDB().set(key, value);
         i++;
     }
 
@@ -51,5 +55,9 @@ public class CouchbaseFacade {
         Object doc = this.getDB().get(i+date + time);
         i++;
         System.out.println(doc);
+    }
+    
+    public void destroyPool(){
+        this.pool.destroy();
     }
 }

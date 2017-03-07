@@ -5,12 +5,8 @@
  */
 package redis;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import CSVreader.CSVReaderToDocument;
-import org.bson.Document;
+import java.util.List;
 
 /**
  *
@@ -18,11 +14,6 @@ import org.bson.Document;
  */
 public class RedisTest {
 
-    private String host = "localhost";
-    private String port = "27017";
-    private String dbName = "teste";
-    private int i = 0;
-    
     private int qtdUser;
     private int qtdTransacoes;
 
@@ -42,23 +33,31 @@ public class RedisTest {
         this.qtdTransacoes = qtdTransacoes;
     }
 
-    ArrayList<Document> documentos;
-    CSVReaderToDocument leitor = new CSVReaderToDocument();
-
-    public void testarInsercao() {
-
-        try {
-            documentos = leitor.getDocumentos();
-        } catch (IOException ex) {
-            Logger.getLogger(RedisTest.class.getName()).log(Level.SEVERE, null, ex);
+    public void testarInsercao() throws InterruptedException {
+        List threads = new ArrayList();//lista para guardar threads em execução
+        for (int i = 0; i < qtdUser; i++) {
+            RedisInsertThread thread = new RedisInsertThread("user_" + i, qtdTransacoes);
+            thread.start();
+            threads.add(thread);
         }
-        
-        //TODO fazer fachada nova
-        //FachadaMongo.getInstancia().insert(host, port, dbName, documentos.get(i));
+        //esperando por todas as threads finalizarem pra dar continuidade
+        for (Object thread : threads) {
+            ((Thread) thread).join();
+        }
+        RedisFacade.getInstancia().destroyPool();
     }
 
-    public void testarConsulta() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void testarConsulta() throws InterruptedException {
+        List threads = new ArrayList();//lista para guardar threads em execução
+        for (int i = 0; i < qtdUser; i++) {
+            RedisReadThread thread = new RedisReadThread("user_" + i, qtdTransacoes);
+            thread.start();
+            threads.add(thread);
+        }
+        //esperando por todas as threads finalizarem pra dar continuidade
+        for (Object thread : threads) {
+            ((Thread) thread).join();
+        }
+        RedisFacade.getInstancia().destroyPool();
     }
-
 }
