@@ -30,7 +30,7 @@ public class CouchFacade {
     // couchdb-2.properties is on the classpath
     public CouchDbClient getDB(){
         if (couchClient == null){
-            couchClient = new CouchDbClient("db-teste", true, "http", "127.0.0.1", 5984, "", "");
+            couchClient = new CouchDbClient("db-teste", true, "https", "127.0.0.1", 5984, "", "");
         }
         return couchClient;
     }
