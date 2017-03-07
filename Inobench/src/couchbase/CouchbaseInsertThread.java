@@ -5,7 +5,6 @@
  */
 package couchbase;
 
-import couchdb.*;
 import core.Errors;
 import java.io.IOException;
 import java.util.ArrayList;
