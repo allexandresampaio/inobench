@@ -8,6 +8,9 @@ package couchbase;
 import com.couchbase.client.java.*;
 import com.couchbase.client.java.document.JsonDocument;
 import com.couchbase.client.java.document.json.JsonObject;
+import static com.couchbase.client.java.query.Select.select;
+import static com.couchbase.client.java.query.dsl.Expression.s;
+import static com.couchbase.client.java.query.dsl.Expression.x;
 
 /**
  *
@@ -49,7 +52,9 @@ public class CouchbaseFacade {
     //busca pelo _id
     public void read(String date, String time) {
         Object doc = this.getDB().get(i+date + time);
+        Object doc2 = this.getDB().query(select("*").from("default").where(x(date).eq(s(date))));
         i++;
-        System.out.println(doc);
+        //System.out.println(doc);
+        System.out.println(doc2);
     }
 }
