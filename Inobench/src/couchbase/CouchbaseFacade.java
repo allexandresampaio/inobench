@@ -19,6 +19,7 @@ public class CouchbaseFacade {
     // Initialize the Connection
     Cluster cluster = CouchbaseCluster.create("localhost");
     Bucket bucket;
+    int i = 0;
 
     private CouchbaseFacade() {
     }
@@ -40,13 +41,14 @@ public class CouchbaseFacade {
 
     //cria um _id pra ser usado novamente quando for buscar os documentos
     public void insert(JsonObject documento) {
-        this.getDB().upsert(JsonDocument.create(documento.getString("date")
+        this.getDB().upsert(JsonDocument.create(i+documento.getString("date")
                 + documento.getString("time"), documento));
+        i++;
     }
 
     //busca pelo _id
     public void read(String date, String time) {
-        Object doc = this.getDB().get(date + time);
+        Object doc = this.getDB().get(i+date + time);
         System.out.println(doc);
     }
 }
