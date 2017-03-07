@@ -16,6 +16,8 @@ import com.couchbase.client.java.document.json.JsonObject;
 public class CouchbaseFacade {
 
     private static CouchbaseFacade instancia = null;
+    // Initialize the Connection
+    Cluster cluster = CouchbaseCluster.create("localhost");
     Bucket bucket;
 
     private CouchbaseFacade() {
@@ -31,8 +33,6 @@ public class CouchbaseFacade {
     // couchdb-2.properties is on the classpath
     public Bucket getDB() {
         if (bucket == null) {
-            // Initialize the Connection
-            Cluster cluster = CouchbaseCluster.create("localhost");
             bucket = cluster.openBucket("default");
         }
         return bucket;
@@ -40,8 +40,8 @@ public class CouchbaseFacade {
 
     //cria um _id pra ser usado novamente quando for buscar os documentos
     public void insert(JsonObject documento) {
-        this.getDB().upsert(JsonDocument.create(documento.getString("date")+
-                documento.getString("time"), documento));
+        this.getDB().upsert(JsonDocument.create(documento.getString("date")
+                + documento.getString("time"), documento));
     }
 
     //busca pelo _id
