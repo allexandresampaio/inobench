@@ -49,6 +49,7 @@ public class CouchbaseFacade {
     //busca pelo _id
     public void read(String date, String time) {
         Object doc = this.getDB().get(i+date + time);
+        i++;
         System.out.println(doc);
     }
 }
