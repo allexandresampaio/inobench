@@ -5,9 +5,9 @@
  */
 package core;
 
-import couchdb.CouchTest;
 import java.io.IOException;
 import CSVreader.CSVReader;
+import couchbase.CouchbaseTest;
 import mongodb.MongoTest;
 import redis.RedisTest;
 import riakts.RiakTSTest;
@@ -127,7 +127,7 @@ public class Inobench {
                 }
                 break;
             case 2:
-                CouchTest couch = new CouchTest();
+                CouchbaseTest couch = new CouchbaseTest();
                 couch.setQtdUser(qtdUsers);
                 couch.setQtdTransacoes(qtdTransacoes);
                 if (tipo == 1) {
