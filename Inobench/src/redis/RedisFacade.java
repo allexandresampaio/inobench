@@ -5,9 +5,6 @@
  */
 package redis;
 
-import com.couchbase.client.java.*;
-import com.couchbase.client.java.document.JsonDocument;
-import com.couchbase.client.java.document.json.JsonObject;
 import org.bson.Document;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -44,7 +41,7 @@ public class RedisFacade {
 
     //cria um _id pra ser usado novamente quando for buscar os documentos
     public void insert(Document d) {
-        String key = i+d.getString(0)+d.getString(1);
+        String key = i+d.getString("date")+d.getString("time");
         String value = d.toString();
         this.getDB().set(key, value);
         i++;
