@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import CSVreader.CSVReaderToDocument;
+import CSVreader.CSVReaderToJSon;
+import com.couchbase.client.java.document.json.JsonObject;
 import org.bson.Document;
 
 /**
@@ -23,8 +25,8 @@ class CouchbaseReadThread extends Thread {
     String nome;
     int qtdTransacoes;
 
-    ArrayList<Document> documentos;
-    CSVReaderToDocument leitor = new CSVReaderToDocument();
+    ArrayList<JsonObject> documentos;
+    CSVReaderToJSon leitor = new CSVReaderToJSon();
 
     /**
      * Construtor da classe.
@@ -48,7 +50,7 @@ class CouchbaseReadThread extends Thread {
     public void TestarConsulta() {
         int i = 0;
         for (int x = 0; x < qtdTransacoes; x++) {
-            Document documento = documentos.get(i);
+            JsonObject documento = documentos.get(i);
             
             try {
                 fachada.read(documento.getString("date"), documento.getString("time"));

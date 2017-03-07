@@ -10,10 +10,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import CSVreader.CSVReaderToDocument;
 import CSVreader.CSVReaderToJSon;
 import com.couchbase.client.java.document.json.JsonObject;
-import org.bson.Document;
 
 /**
  *
