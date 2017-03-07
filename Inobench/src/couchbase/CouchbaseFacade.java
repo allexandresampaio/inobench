@@ -6,6 +6,10 @@
 package couchbase;
 
 import org.bson.Document;
+import com.couchbase.client.java*;
+import com.couchbase.client.java.document.*;
+import com.couchbase.client.java.document.json.*;
+import com.couchbase.client.java.query.*;
 
 /**
  *
