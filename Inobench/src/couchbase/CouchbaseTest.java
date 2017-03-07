@@ -5,7 +5,6 @@
  */
 package couchbase;
 
-import couchdb.*;
 import java.util.ArrayList;
 import java.util.List;
 
