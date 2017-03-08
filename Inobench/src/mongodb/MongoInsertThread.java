@@ -59,11 +59,11 @@ class MongoInsertThread extends Thread {
                 fachada.insert(host, port, dbName, documento);
             } catch (Exception e) {
                 Errors.getInstancia().marcaErro();
+                System.out.println(e);
             }
             
             System.out.println("Thread: " + this.nome + ". Inserindo: " + x);
             //verifica se i chegou no fim da amostra
-            //TODO deixar isso dinâmico p/ usar novos datasets
             if (i < documentos.size()-1) {
                 i++;
             } else {

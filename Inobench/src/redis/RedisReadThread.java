@@ -54,6 +54,7 @@ class RedisReadThread extends Thread {
                 fachada.read(documento.getString("date"), documento.getString("time"));
             } catch (Exception e) {
                 Errors.getInstancia().marcaErro();
+                System.out.println(e);
             }
             
             System.out.println("Thread: " + this.nome + ". Lendo: " + x);

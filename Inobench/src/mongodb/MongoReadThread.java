@@ -58,6 +58,7 @@ class MongoReadThread extends Thread {
                 fachada.read(host, port, dbName, documento.getString("date"), documento.getString("time"));
             } catch (Exception e) {
                 Errors.getInstancia().marcaErro();
+                System.out.println(e);
             }
             
             System.out.println("Thread: " + this.nome + ". Lendo: " + x);
