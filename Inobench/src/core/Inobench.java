@@ -10,7 +10,7 @@ import CSVreader.CSVReaderToDocument;
 import couchbase.CouchbaseTest;
 import mongodb.MongoTest;
 import redis.RedisTest;
-import riakts.RiakTSTest;
+import riakts.RiaktsTest;
 
 /**
  *
@@ -147,7 +147,7 @@ public class Inobench {
                 }
                 break;
             case 4:
-                RiakTSTest riak = new RiakTSTest();
+                RiaktsTest riak = new RiaktsTest();
                 riak.setQtdUser(qtdUsers);
                 riak.setQtdTransacoes(qtdTransacoes);
                 if (tipo == 1) {

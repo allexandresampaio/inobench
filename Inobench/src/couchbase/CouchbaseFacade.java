@@ -41,14 +41,13 @@ public class CouchbaseFacade {
 
     //cria um _id pra ser usado novamente quando for buscar os documentos
     public void insert(JsonObject documento) {
-        this.getDB().upsert(JsonDocument.create(i+documento.getString("date")
-                + documento.getString("time"), documento));
+        this.getDB().upsert(JsonDocument.create("key"+i, documento));
         i++;
     }
 
     //busca pelo _id
-    public void read(String date, String time) {
-        Object doc = this.getDB().get(i+date + time);
+    public void read() {
+        Object doc = this.getDB().get("key"+i);
         i++;
         System.out.println(doc);
     }

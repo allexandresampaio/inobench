@@ -48,10 +48,8 @@ class RedisReadThread extends Thread {
     public void TestarConsulta() {
         int i = 0;
         for (int x = 0; x < qtdTransacoes; x++) {
-            Document documento = documentos.get(i);
-            
             try {
-                fachada.read(documento.getString("date"), documento.getString("time"));
+                fachada.read();
             } catch (Exception e) {
                 Errors.getInstancia().marcaErro();
                 System.out.println(e);
