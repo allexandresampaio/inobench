@@ -44,14 +44,14 @@ public class RiaktsFacade {
 
     //cria um _id pra ser usado novamente quando for buscar os documentos
     public void insert(JsonObject documento) {
-        this.getDB().upsert(JsonDocument.create("key" + i, documento));
+        //this.getDB().upsert(JsonDocument.create("key" + i, documento));
         i++;
     }
 
     //busca pelo _id
     public void read() {
-        Object doc = this.getDB().get("key" + i);
+        //Object doc = this.getDB().get("key" + i);
         i++;
-        System.out.println(doc);
+        //System.out.println(doc);
     }
 }

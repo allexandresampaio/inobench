@@ -20,7 +20,7 @@ public class RedisFacade {
     private static RedisFacade instancia = null;
     // Initialize the Connection
     final JedisPoolConfig poolConfig = buildPoolConfig();
-    JedisPool pool = new JedisPool(poolConfig, "localhost", 100000);
+    JedisPool pool = new JedisPool(poolConfig, "localhost");
     Jedis jedis;
     int i = 0;
 
@@ -38,11 +38,11 @@ public class RedisFacade {
         poolConfig.setBlockWhenExhausted(true);
         return poolConfig;
     }
-    
+
     private RedisFacade() {
     }
 
-    public static RedisFacade getInstancia() {
+    public static RedisFacade getInstancia(){
         if (instancia == null) {
             instancia = new RedisFacade();
         }
@@ -51,9 +51,7 @@ public class RedisFacade {
 
     // retorna um cliente jedis da pool
     public Jedis getDB() {
-        //if (jedis == null) {
-            jedis = pool.getResource();
-        //}
+        jedis = pool.getResource();
         return jedis;
     }
 
@@ -61,13 +59,17 @@ public class RedisFacade {
     public void insert(Document d) {
         String key = "key" + i;
         String value = d.toString();
-        this.getDB().set(key, value);
+        Jedis jedis = this.getDB();
+        jedis.set(key, value);
+        jedis.close();
         i++;
     }
 
     //busca pelo _id
     public void read() {
-        Object doc = this.getDB().get("key" + i);
+        Jedis jedis = this.getDB();
+        Object doc = jedis.get("key" + i);
+        jedis.close();
         i++;
         System.out.println(doc);
     }
