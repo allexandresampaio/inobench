@@ -6,10 +6,14 @@
 package riakts;
 
 import com.basho.riak.client.api.RiakClient;
+import com.basho.riak.client.api.commands.timeseries.Query;
+import com.basho.riak.client.api.commands.timeseries.Store;
+import com.basho.riak.client.core.query.timeseries.Cell;
+import com.basho.riak.client.core.query.timeseries.QueryResult;
+import com.basho.riak.client.core.query.timeseries.Row;
 import java.net.UnknownHostException;
-import com.couchbase.client.java.*;
-import com.couchbase.client.java.document.JsonDocument;
 import com.couchbase.client.java.document.json.JsonObject;
+import java.util.concurrent.ExecutionException;
 
 /**
  *
@@ -21,7 +25,6 @@ public class RiaktsFacade {
     // Riak Client with supplied IP and Port
     RiakClient client;
 
-    
     int i = 0;
 
     private RiaktsFacade() {
@@ -37,21 +40,42 @@ public class RiaktsFacade {
     // couchdb-2.properties is on the classpath
     public RiakClient getDB() throws UnknownHostException {
         if (client == null) {
-            client =  RiakClient.newClient();
+            client = RiakClient.newClient(8087, "myriakdb.host");
         }
         return client;
     }
 
     //cria um _id pra ser usado novamente quando for buscar os documentos
-    public void insert(JsonObject documento) {
-        //this.getDB().upsert(JsonDocument.create("key" + i, documento));
+    public void insert(JsonObject documento) throws UnknownHostException, ExecutionException, InterruptedException {
+        Row row = new Row(
+                new Cell(i),
+                new Cell(documento.getString("date")),
+                new Cell(documento.getString("time")),
+                new Cell(documento.getString("s1")),
+                new Cell(documento.getString("s2")),
+                new Cell(documento.getString("s3")),
+                new Cell(documento.getString("s4")),
+                new Cell(documento.getString("s5")),
+                new Cell(documento.getString("s6")),
+                new Cell(documento.getString("s7")),
+                new Cell(documento.getString("s8")),
+                new Cell(documento.getString("s9")),
+                new Cell(documento.getString("s10")),
+                new Cell(documento.getString("s11")),
+                new Cell(documento.getString("s12")),
+                new Cell(documento.getString("s13"))
+        );
+        Store cmd = new Store.Builder("Tabela").withRow(row).build();
+        this.getDB().execute(cmd);
         i++;
     }
 
     //busca pelo _id
-    public void read() {
-        //Object doc = this.getDB().get("key" + i);
+    public void read() throws ExecutionException, InterruptedException {
+        String queryText = "select i, date, time from Tabela";
+        Query query = new Query.Builder(queryText).build();
+        QueryResult queryResult = client.execute(query);
         i++;
-        //System.out.println(doc);
+        System.out.println(queryResult.toString());
     }
 }
