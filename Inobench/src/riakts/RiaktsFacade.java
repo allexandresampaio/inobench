@@ -40,7 +40,7 @@ public class RiaktsFacade {
     // couchdb-2.properties is on the classpath
     public RiakClient getDB() throws UnknownHostException {
         if (client == null) {
-            client = RiakClient.newClient(8087, "myriakdb.host");
+            client = RiakClient.newClient(8098, "localhost");
         }
         return client;
     }
