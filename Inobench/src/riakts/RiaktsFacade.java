@@ -37,7 +37,7 @@ public class RiaktsFacade {
         return instancia;
     }
 
-    // couchdb-2.properties is on the classpath
+    // retorna instância do riak
     public RiakClient getDB() throws UnknownHostException {
         if (client == null) {
             client = RiakClient.newClient(8098, "localhost");
@@ -72,7 +72,7 @@ public class RiaktsFacade {
 
     //busca pelo _id
     public void read() throws ExecutionException, InterruptedException {
-        String queryText = "select i, date, time from Tabela";
+        String queryText = "select i, date, time from Tabela where i = " + i + "";
         Query query = new Query.Builder(queryText).build();
         QueryResult queryResult = client.execute(query);
         i++;
