@@ -8,6 +8,7 @@ package core;
 import java.io.IOException;
 import CSVreader.CSVReaderToDocument;
 import couchbase.CouchbaseTest;
+import influxdb.InfluxDBTest;
 import mongodb.MongoTest;
 import redis.RedisTest;
 import riakts.RiaktsTest;
@@ -147,13 +148,22 @@ public class Inobench {
                 }
                 break;
             case 4:
-                RiaktsTest riak = new RiaktsTest();
-                riak.setQtdUser(qtdUsers);
-                riak.setQtdTransacoes(qtdTransacoes);
+//                RiaktsTest influx = new RiaktsTest();
+//                influx.setQtdUser(qtdUsers);
+//                influx.setQtdTransacoes(qtdTransacoes);
+//                if (tipo == 1) {
+//                    influx.testarInsercao();
+//                } else {
+//                    influx.testarConsulta();
+//                }
+//                break;
+                InfluxDBTest influx = new InfluxDBTest();
+                influx.setQtdUser(qtdUsers);
+                influx.setQtdTransacoes(qtdTransacoes);
                 if (tipo == 1) {
-                    riak.testarInsercao();
+                    influx.testarInsercao();
                 } else {
-                    riak.testarConsulta();
+                    influx.testarConsulta();
                 }
                 break;
             default:
