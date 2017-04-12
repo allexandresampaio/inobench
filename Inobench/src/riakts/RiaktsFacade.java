@@ -40,7 +40,7 @@ public class RiaktsFacade {
     // retorna instância do riak
     public RiakClient getDB() throws UnknownHostException {
         if (client == null) {
-            client = RiakClient.newClient(8098, "localhost");
+            client = RiakClient.newClient("localhost");
         }
         return client;
     }
@@ -71,11 +71,15 @@ public class RiaktsFacade {
     }
 
     //busca pelo _id
-    public void read() throws ExecutionException, InterruptedException {
-        String queryText = "select i, date, time from Tabela where i = " + i + "";
+    public void read() throws ExecutionException, InterruptedException, UnknownHostException {
+        String queryText = "select * from Tabela where i = " + i + "";
         Query query = new Query.Builder(queryText).build();
-        QueryResult queryResult = client.execute(query);
+        QueryResult queryResult = this.getDB().execute(query);
         i++;
         System.out.println(queryResult.toString());
+    }
+    
+    public void closeRiak() throws UnknownHostException{
+        this.getDB().shutdown();
     }
 }

@@ -5,6 +5,7 @@
  */
 package riakts;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class RiaktsTest {
         this.qtdTransacoes = qtdTransacoes;
     }
 
-    public void testarInsercao() throws InterruptedException {
+    public void testarInsercao() throws InterruptedException, UnknownHostException {
         List threads = new ArrayList();//lista para guardar threads em execução
         for (int i = 0; i < qtdUser; i++) {
             RiaktsInsertThread thread = new RiaktsInsertThread("user_" + i, qtdTransacoes);
@@ -44,9 +45,10 @@ public class RiaktsTest {
         for (Object thread : threads) {
             ((Thread) thread).join();
         }
+        RiaktsFacade.getInstancia().closeRiak();
     }
 
-    public void testarConsulta() throws InterruptedException {
+    public void testarConsulta() throws InterruptedException, UnknownHostException {
         List threads = new ArrayList();//lista para guardar threads em execução
         for (int i = 0; i < qtdUser; i++) {
             RiaktsReadThread thread = new RiaktsReadThread("user_" + i, qtdTransacoes);
@@ -57,5 +59,6 @@ public class RiaktsTest {
         for (Object thread : threads) {
             ((Thread) thread).join();
         }
+        RiaktsFacade.getInstancia().closeRiak();
     }
 }

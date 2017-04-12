@@ -148,7 +148,16 @@ public class Inobench {
                 }
                 break;
             case 4:
-//                RiaktsTest influx = new RiaktsTest();
+                RiaktsTest riak = new RiaktsTest();
+                riak.setQtdUser(qtdUsers);
+                riak.setQtdTransacoes(qtdTransacoes);
+                if (tipo == 1) {
+                    riak.testarInsercao();
+                } else {
+                    riak.testarConsulta();
+                }
+                break;
+//                InfluxDBTest influx = new InfluxDBTest();
 //                influx.setQtdUser(qtdUsers);
 //                influx.setQtdTransacoes(qtdTransacoes);
 //                if (tipo == 1) {
@@ -157,15 +166,6 @@ public class Inobench {
 //                    influx.testarConsulta();
 //                }
 //                break;
-                InfluxDBTest influx = new InfluxDBTest();
-                influx.setQtdUser(qtdUsers);
-                influx.setQtdTransacoes(qtdTransacoes);
-                if (tipo == 1) {
-                    influx.testarInsercao();
-                } else {
-                    influx.testarConsulta();
-                }
-                break;
             default:
                 break;
         }
