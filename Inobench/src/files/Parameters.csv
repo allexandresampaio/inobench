@@ -11,5 +11,6 @@ Banco:
 Tipo de Teste:
     1: Inserção
     2: Consulta
+    3: Deletar registros (exclusivo para RiakTS)
 Qtd Usuários: livre
 Qtd Transações: livre
