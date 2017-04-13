@@ -6,12 +6,8 @@
 package riakts;
 
 import core.Errors;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import CSVreader.CSVReaderToJSon;
-import com.couchbase.client.java.document.json.JsonObject;
 
 /**
  *
@@ -23,10 +19,7 @@ class RiaktsDeleteThread extends Thread {
     String nome;
     int qtdTransacoes;
 
-    ArrayList<JsonObject> documentos;
-    CSVReaderToJSon leitor = new CSVReaderToJSon();
-
-    /**
+        /**
      * Construtor da classe.
      */
     public RiaktsDeleteThread(String nome, int qtdTransacoes) {
@@ -37,15 +30,8 @@ class RiaktsDeleteThread extends Thread {
         this.nome = nome;
     }
     
-    public void CriarArray() {
-        try {
-            documentos = leitor.getDocumentos();
-        } catch (IOException ex) {
-            Logger.getLogger(RiaktsTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 
-    public void TestarConsulta() {
+    public void Deletar() {
         int i = 0;
         for (int x = 0; x < qtdTransacoes; x++) {
             try {
@@ -54,7 +40,6 @@ class RiaktsDeleteThread extends Thread {
                 Errors.getInstancia().marcaErro();
                 System.out.println(e);
             }
-            
             System.out.println("Thread: " + this.nome + ". Deleting: " + x);
         }
     }
@@ -63,9 +48,8 @@ class RiaktsDeleteThread extends Thread {
      * Método run da thread
      */
     public void run() {
-        this.CriarArray();
         try {
-            this.TestarConsulta();
+            this.Deletar();
         } catch (Exception e) {
             Logger.getLogger(RiaktsDeleteThread.class.getName()).log(Level.SEVERE, null, e);
         }

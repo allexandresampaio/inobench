@@ -8,7 +8,6 @@ package core;
 import java.io.IOException;
 import CSVreader.CSVReaderToDocument;
 import couchbase.CouchbaseTest;
-import influxdb.InfluxDBTest;
 import mongodb.MongoTest;
 import redis.RedisTest;
 import riakts.RiaktsTest;
@@ -166,16 +165,6 @@ public class Inobench {
                     default:
                         break;
                 }
-                break;
-//                InfluxDBTest influx = new InfluxDBTest();
-//                influx.setQtdUser(qtdUsers);
-//                influx.setQtdTransacoes(qtdTransacoes);
-//                if (tipo == 1) {
-//                    influx.testarInsercao();
-//                } else {
-//                    influx.testarConsulta();
-//                }
-//                break;
             default:
                 break;
         }
