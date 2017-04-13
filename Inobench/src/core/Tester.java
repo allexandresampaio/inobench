@@ -24,6 +24,7 @@ public class Tester {
         System.out.println("Tempo: " + tester.getDuracao() + " segundos.");
         System.out.println("Vazão: " + tester.getVazao() + " inserções por segundo.");
         System.out.println("Erros: " + tester.getErros());
+        System.exit(0);
     }
 
 }

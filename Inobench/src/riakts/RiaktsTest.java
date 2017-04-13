@@ -61,4 +61,18 @@ public class RiaktsTest {
         }
         RiaktsFacade.getInstancia().closeRiak();
     }
+    
+    public void testarDelete() throws InterruptedException, UnknownHostException {
+        List threads = new ArrayList();//lista para guardar threads em execução
+        for (int i = 0; i < qtdUser; i++) {
+            RiaktsDeleteThread thread = new RiaktsDeleteThread("user_" + i, qtdTransacoes);
+            thread.start();
+            threads.add(thread);
+        }
+        //esperando por todas as threads finalizarem pra dar continuidade
+        for (Object thread : threads) {
+            ((Thread) thread).join();
+        }
+        RiaktsFacade.getInstancia().closeRiak();
+    }
 }

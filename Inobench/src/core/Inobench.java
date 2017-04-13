@@ -39,7 +39,7 @@ public class Inobench {
     public void setDuracao(double duracao) {
         this.duracao = duracao;
     }
-    
+
     public int getErros() {
         return erros;
     }
@@ -47,15 +47,17 @@ public class Inobench {
     public void setErros(int erros) {
         this.erros = erros;
     }
-    
+
     public double getVazao() {
         return vazao;
     }
 
     public void setVazao() {
-        if (this.duracao>0) 
-            this.vazao = (this.qtdUsers*this.qtdTransacoes)/this.duracao;
-        else this.vazao = this.qtdUsers*this.qtdTransacoes;
+        if (this.duracao > 0) {
+            this.vazao = (this.qtdUsers * this.qtdTransacoes) / this.duracao;
+        } else {
+            this.vazao = this.qtdUsers * this.qtdTransacoes;
+        }
     }
 
     public int getQtdUsers() {
@@ -96,17 +98,17 @@ public class Inobench {
         this.qtdUsers = qtdUser;
         this.qtdTransacoes = qtdTransacoes;
     }
-    
-    public void preTeste(){
+
+    public void preTeste() {
         Errors.getInstancia().setErro(0);
         this.setTempoInicial(System.currentTimeMillis());
     }
-    
-    public void posTeste(){
+
+    public void posTeste() {
         this.setTempoFinal(System.currentTimeMillis());
         this.setErros(Errors.getInstancia().getErros());
-        this.setDuracao((this.getTempoFinal()-this.getTempoInicial())/1000.0);
-        this.setVazao();  
+        this.setDuracao((this.getTempoFinal() - this.getTempoInicial()) / 1000.0);
+        this.setVazao();
         CSVReaderToDocument leitor = new CSVReaderToDocument();
         leitor.gravarResultados(this.banco, this.qtdUsers, this.qtdTransacoes, this.tipo, this.tempoInicial, this.tempoFinal, this.duracao, this.vazao, this.erros);
     }
@@ -151,10 +153,18 @@ public class Inobench {
                 RiaktsTest riak = new RiaktsTest();
                 riak.setQtdUser(qtdUsers);
                 riak.setQtdTransacoes(qtdTransacoes);
-                if (tipo == 1) {
-                    riak.testarInsercao();
-                } else {
-                    riak.testarConsulta();
+                switch (tipo) {
+                    case 1:
+                        riak.testarInsercao();
+                        break;
+                    case 2:
+                        riak.testarConsulta();
+                        break;
+                    case 3://case especial para remoção de dados do banco
+                        riak.testarDelete();
+                        break;
+                    default:
+                        break;
                 }
                 break;
 //                InfluxDBTest influx = new InfluxDBTest();

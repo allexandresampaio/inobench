@@ -79,6 +79,14 @@ public class RiaktsFacade {
         System.out.println(queryResult);
     }
     
+    //remoção de dados do banco, já que ele não permite a remoção de uma vez só
+    public void cleanDB() throws UnknownHostException, ExecutionException, InterruptedException{
+        String queryText = "delete from Tabela where i = " + i;
+        Query query = new Query.Builder(queryText).build();
+        this.getDB().execute(query);
+        i++;
+    }
+    
     public void closeRiak() throws UnknownHostException{
         this.getDB().shutdown();
     }
