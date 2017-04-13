@@ -72,11 +72,11 @@ public class RiaktsFacade {
 
     //busca pelo _id
     public void read() throws ExecutionException, InterruptedException, UnknownHostException {
-        String queryText = "select * from Tabela where i = " + i + "";
+        String queryText = "select i, date, time from Tabela where i = " + i;
         Query query = new Query.Builder(queryText).build();
         QueryResult queryResult = this.getDB().execute(query);
         i++;
-        System.out.println(queryResult.toString());
+        System.out.println(queryResult);
     }
     
     public void closeRiak() throws UnknownHostException{
