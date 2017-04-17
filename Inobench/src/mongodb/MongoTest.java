@@ -16,6 +16,15 @@ public class MongoTest {
 
     private int qtdUser;
     private int qtdTransacoes;
+    private String endereco;
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
 
     public int getQtdUser() {
         return qtdUser;
@@ -36,7 +45,7 @@ public class MongoTest {
     public void testarInsercao() throws InterruptedException {
         List threads = new ArrayList();//lista para guardar threads em execução
         for (int i = 0; i < qtdUser; i++) {
-            MongoInsertThread thread = new MongoInsertThread("user_" + i, qtdTransacoes);
+            MongoInsertThread thread = new MongoInsertThread("user_" + i, qtdTransacoes, endereco);
             thread.start();
             threads.add(thread);
         }
@@ -49,7 +58,7 @@ public class MongoTest {
     public void testarConsulta() throws InterruptedException {
         List threads = new ArrayList();//lista para guardar threads em execução
         for (int i = 0; i < qtdUser; i++) {
-            MongoReadThread thread = new MongoReadThread("user_" + i, qtdTransacoes);
+            MongoReadThread thread = new MongoReadThread("user_" + i, qtdTransacoes, endereco);
             thread.start();
             threads.add(thread);
         }

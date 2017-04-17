@@ -30,10 +30,10 @@ class RedisInsertThread extends Thread {
     /**
      * Construtor da classe.
      */
-    public RedisInsertThread(String nome, int qtdTransacoes) {
+    public RedisInsertThread(String nome, int qtdTransacoes, String endereco) {
         /* chamando o construtor de Thread passando o nome da thread como parâmetro */
         super(nome);
-        this.fachada = RedisFacade.getInstancia();
+        this.fachada = RedisFacade.getInstancia(endereco);
         this.qtdTransacoes = qtdTransacoes;
         this.nome = nome;
     }

@@ -75,9 +75,10 @@ public class CSVReaderToJSon {
         int tipo = Integer.parseInt(linha[1]);
         int qtdUsers = Integer.parseInt(linha[2]);
         int qtdTransacoes = Integer.parseInt(linha[3]);
+        String endereco = linha[4];
 
         Parameters parametros = new Parameters();
-        parametros.setParametros(banco, tipo, qtdUsers, qtdTransacoes);
+        parametros.setParametros(banco, tipo, qtdUsers, qtdTransacoes, endereco);
 
         return parametros;
     }

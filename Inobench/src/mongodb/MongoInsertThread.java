@@ -19,9 +19,7 @@ import org.bson.Document;
  */
 class MongoInsertThread extends Thread {
 
-    private String host = "localhost";
-    private String port = "27017";
-    private String dbName = "teste";
+    private String host;
     MongoFacade fachada;
 
     ArrayList<Document> documentos;
@@ -33,10 +31,10 @@ class MongoInsertThread extends Thread {
     /**
      * Construtor da classe.
      */
-    public MongoInsertThread(String nome, int qtdTransacoes) {
+    public MongoInsertThread(String nome, int qtdTransacoes, String endereco) {
         /* chamando o construtor de Thread passando o nome da thread como parâmetro */
         super(nome);
-        this.fachada = MongoFacade.getInstancia();
+        this.fachada = MongoFacade.getInstancia(endereco);
         this.qtdTransacoes = qtdTransacoes;
         this.nome = nome;
     }
@@ -56,7 +54,7 @@ class MongoInsertThread extends Thread {
             if (documento.containsKey("_id")) documento.remove("_id");
             
             try {
-                fachada.insert(host, port, dbName, documento);
+                fachada.insert(documento);
             } catch (Exception e) {
                 Errors.getInstancia().marcaErro();
                 System.out.println(e);

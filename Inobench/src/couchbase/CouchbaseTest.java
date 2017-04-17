@@ -16,6 +16,15 @@ public class CouchbaseTest {
 
     private int qtdUser;
     private int qtdTransacoes;
+    private String endereco;
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
 
     public int getQtdUser() {
         return qtdUser;
@@ -36,7 +45,7 @@ public class CouchbaseTest {
     public void testarInsercao() throws InterruptedException {
         List threads = new ArrayList();//lista para guardar threads em execução
         for (int i = 0; i < qtdUser; i++) {
-            CouchbaseInsertThread thread = new CouchbaseInsertThread("user_" + i, qtdTransacoes);
+            CouchbaseInsertThread thread = new CouchbaseInsertThread("user_" + i, qtdTransacoes, endereco);
             thread.start();
             threads.add(thread);
         }
@@ -49,7 +58,7 @@ public class CouchbaseTest {
     public void testarConsulta() throws InterruptedException {
         List threads = new ArrayList();//lista para guardar threads em execução
         for (int i = 0; i < qtdUser; i++) {
-            CouchbaseReadThread thread = new CouchbaseReadThread("user_" + i, qtdTransacoes);
+            CouchbaseReadThread thread = new CouchbaseReadThread("user_" + i, qtdTransacoes, endereco);
             thread.start();
             threads.add(thread);
         }

@@ -17,16 +17,17 @@ public class CouchbaseFacade {
 
     private static CouchbaseFacade instancia = null;
     // Initialize the Connection
-    Cluster cluster = CouchbaseCluster.create("localhost");
+    Cluster cluster = null;
     Bucket bucket;
     int i = 0;
 
-    private CouchbaseFacade() {
+    private CouchbaseFacade(String host) {
+        cluster = CouchbaseCluster.create(host);
     }
 
-    public static CouchbaseFacade getInstancia() {
+    public static CouchbaseFacade getInstancia(String host) {
         if (instancia == null) {
-            instancia = new CouchbaseFacade();
+            instancia = new CouchbaseFacade(host);
         }
         return instancia;
     }

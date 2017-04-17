@@ -17,6 +17,15 @@ public class Parameters {
     private int tipo = 0;
     private int qtdUsers = 0;
     private int qtdTransacoes = 0;
+    private String endereco;
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
 
     public int getBanco() {
         return banco;
@@ -34,11 +43,12 @@ public class Parameters {
         return qtdTransacoes;
     }
 
-    public void setParametros(int banco, int tipo, int qtdUsers, int qtdTransacoes) {
+    public void setParametros(int banco, int tipo, int qtdUsers, int qtdTransacoes, String endereco) {
         this.banco = banco;
         this.tipo = tipo;
         this.qtdUsers = qtdUsers;
         this.qtdTransacoes = qtdTransacoes;
+        this.endereco = endereco;
     }
     
 }

@@ -19,9 +19,7 @@ import org.bson.Document;
  */
 class MongoReadThread extends Thread {
 
-    private String host = "localhost";
-    private String port = "27017";
-    private String dbName = "teste";
+    private String host;
     MongoFacade fachada;
 
     String nome;
@@ -33,10 +31,10 @@ class MongoReadThread extends Thread {
     /**
      * Construtor da classe.
      */
-    public MongoReadThread(String nome, int qtdTransacoes) {
+    public MongoReadThread(String nome, int qtdTransacoes, String endereco) {
         /* chamando o construtor de Thread passando o nome da thread como parâmetro */
         super(nome);
-        this.fachada = MongoFacade.getInstancia();
+        this.fachada = MongoFacade.getInstancia(endereco);
         this.qtdTransacoes = qtdTransacoes;
         this.nome = nome;
     }
@@ -55,7 +53,7 @@ class MongoReadThread extends Thread {
             Document documento = documentos.get(i);
             
             try {
-                fachada.read(host, port, dbName, documento.getString("date"), documento.getString("time"));
+                fachada.read(documento.getString("date"), documento.getString("time"));
             } catch (Exception e) {
                 Errors.getInstancia().marcaErro();
                 System.out.println(e);

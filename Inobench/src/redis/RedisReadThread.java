@@ -29,10 +29,10 @@ class RedisReadThread extends Thread {
     /**
      * Construtor da classe.
      */
-    public RedisReadThread(String nome, int qtdTransacoes) {
+    public RedisReadThread(String nome, int qtdTransacoes, String endereco) {
         /* chamando o construtor de Thread passando o nome da thread como parâmetro */
         super(nome);
-        this.fachada = RedisFacade.getInstancia();
+        this.fachada = RedisFacade.getInstancia(endereco);
         this.qtdTransacoes = qtdTransacoes;
         this.nome = nome;
     }

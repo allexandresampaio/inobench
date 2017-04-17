@@ -22,10 +22,10 @@ class RiaktsDeleteThread extends Thread {
         /**
      * Construtor da classe.
      */
-    public RiaktsDeleteThread(String nome, int qtdTransacoes) {
+    public RiaktsDeleteThread(String nome, int qtdTransacoes, String endereco) {
         /* chamando o construtor de Thread passando o nome da thread como parâmetro */
         super(nome);
-        this.fachada = RiaktsFacade.getInstancia();
+        this.fachada = RiaktsFacade.getInstancia(endereco);
         this.qtdTransacoes = qtdTransacoes;
         this.nome = nome;
     }

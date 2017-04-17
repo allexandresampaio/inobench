@@ -19,48 +19,46 @@ public class MongoFacade {
 
     private static MongoFacade instancia = null;
 
-//    private static final String HOST = "localhost";
-//    private static final int PORT = 27017;
-//    private static final String DB_NAME = "teste";
-    int port;
+    int port = 27017;
+    private String dbName = "teste";
     MongoClient mongoClient;
     MongoDatabase db;
+    private String host;
 
-    private MongoFacade() {
+    private MongoFacade(String host) {
+        this.host = host;
     }
 
-    public static MongoFacade getInstancia() {
+    public static MongoFacade getInstancia(String host) {
         if (instancia == null) {
-            instancia = new MongoFacade();
+            instancia = new MongoFacade(host);
         }
         return instancia;
     }
 
-    public MongoDatabase getDB(String HOST, String PORT, String DB_NAME) {
-        port = Integer.parseInt(PORT);
+    public MongoDatabase getDB() {
         if (mongoClient == null) {
-            mongoClient = new MongoClient(HOST, port);
+            mongoClient = new MongoClient(host, port);
         }
-        db = mongoClient.getDatabase(DB_NAME);
-
+        db = mongoClient.getDatabase(dbName);
         return db;
     }
 
-    public MongoCollection getColecao(String HOST, String PORT, String DB_NAME, String colecao) {
-        MongoCollection col = MongoFacade.getInstancia().getDB(HOST, PORT, DB_NAME).getCollection(colecao);
+    public MongoCollection getColecao(String colecao) {
+        MongoCollection col = MongoFacade.getInstancia(host).getDB().getCollection(colecao);
         return col;
     }
 
-    public void insert(String HOST, String PORT, String DB_NAME, Document documento) {
-        this.getColecao(HOST, PORT, DB_NAME, "documentos").insertOne(documento);
+    public void insert(Document documento) {
+        this.getColecao("documentos").insertOne(documento);
     }
 
-    public void read(String HOST, String PORT, String DB_NAME, String date, String time) {
+    public void read(String date, String time) {
         BasicDBObject includeKeys = new BasicDBObject();
         includeKeys.append("date", date);
         includeKeys.append("time", time);
         
-        Object doc = this.getColecao(HOST, PORT, DB_NAME, "documentos").find(includeKeys).first();
+        Object doc = this.getColecao("documentos").find(includeKeys).first();
         System.out.println(doc);
     }
 

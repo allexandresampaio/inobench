@@ -17,6 +17,15 @@ public class RiaktsTest {
 
     private int qtdUser;
     private int qtdTransacoes;
+    private String endereco;
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
 
     public int getQtdUser() {
         return qtdUser;
@@ -37,7 +46,7 @@ public class RiaktsTest {
     public void testarInsercao() throws InterruptedException, UnknownHostException {
         List threads = new ArrayList();//lista para guardar threads em execução
         for (int i = 0; i < qtdUser; i++) {
-            RiaktsInsertThread thread = new RiaktsInsertThread("user_" + i, qtdTransacoes);
+            RiaktsInsertThread thread = new RiaktsInsertThread("user_" + i, qtdTransacoes, endereco);
             thread.start();
             threads.add(thread);
         }
@@ -45,13 +54,13 @@ public class RiaktsTest {
         for (Object thread : threads) {
             ((Thread) thread).join();
         }
-        RiaktsFacade.getInstancia().closeRiak();
+        RiaktsFacade.getInstancia(endereco).closeRiak();
     }
 
     public void testarConsulta() throws InterruptedException, UnknownHostException {
         List threads = new ArrayList();//lista para guardar threads em execução
         for (int i = 0; i < qtdUser; i++) {
-            RiaktsReadThread thread = new RiaktsReadThread("user_" + i, qtdTransacoes);
+            RiaktsReadThread thread = new RiaktsReadThread("user_" + i, qtdTransacoes, endereco);
             thread.start();
             threads.add(thread);
         }
@@ -59,13 +68,13 @@ public class RiaktsTest {
         for (Object thread : threads) {
             ((Thread) thread).join();
         }
-        RiaktsFacade.getInstancia().closeRiak();
+        RiaktsFacade.getInstancia(endereco).closeRiak();
     }
     
     public void testarDelete() throws InterruptedException, UnknownHostException {
         List threads = new ArrayList();//lista para guardar threads em execução
         for (int i = 0; i < qtdUser; i++) {
-            RiaktsDeleteThread thread = new RiaktsDeleteThread("user_" + i, qtdTransacoes);
+            RiaktsDeleteThread thread = new RiaktsDeleteThread("user_" + i, qtdTransacoes, endereco);
             thread.start();
             threads.add(thread);
         }
@@ -73,6 +82,6 @@ public class RiaktsTest {
         for (Object thread : threads) {
             ((Thread) thread).join();
         }
-        RiaktsFacade.getInstancia().closeRiak();
+        RiaktsFacade.getInstancia(endereco).closeRiak();
     }
 }

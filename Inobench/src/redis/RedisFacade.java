@@ -20,7 +20,7 @@ public class RedisFacade {
     private static RedisFacade instancia = null;
     // Initialize the Connection
     final JedisPoolConfig poolConfig = buildPoolConfig();
-    JedisPool pool = new JedisPool(poolConfig, "localhost");
+    JedisPool pool = null;
     Jedis jedis;
     int i = 0;
 
@@ -39,12 +39,13 @@ public class RedisFacade {
         return poolConfig;
     }
 
-    private RedisFacade() {
+    private RedisFacade(String host) {
+        pool = new JedisPool(poolConfig, host);
     }
 
-    public static RedisFacade getInstancia(){
+    public static RedisFacade getInstancia(String host){
         if (instancia == null) {
-            instancia = new RedisFacade();
+            instancia = new RedisFacade(host);
         }
         return instancia;
     }

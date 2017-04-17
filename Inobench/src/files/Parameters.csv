@@ -1,4 +1,4 @@
-4;3;10;1000
+4;2;1;10;localhost
 
 # Preencher na primeira linha as informações referentes ao teste na ordem especificada a seguir:
 Banco;Tipo de Teste;Qtd Usuários;Qtd Transações
@@ -14,3 +14,4 @@ Tipo de Teste:
     3: Deletar registros (exclusivo para RiakTS)
 Qtd Usuários: livre
 Qtd Transações: livre
+Endereço do host do banco de dados

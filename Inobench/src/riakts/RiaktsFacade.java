@@ -8,11 +8,15 @@ package riakts;
 import com.basho.riak.client.api.RiakClient;
 import com.basho.riak.client.api.commands.timeseries.Query;
 import com.basho.riak.client.api.commands.timeseries.Store;
+import com.basho.riak.client.core.RiakCluster;
+import com.basho.riak.client.core.RiakNode;
 import com.basho.riak.client.core.query.timeseries.Cell;
 import com.basho.riak.client.core.query.timeseries.QueryResult;
 import com.basho.riak.client.core.query.timeseries.Row;
 import java.net.UnknownHostException;
 import com.couchbase.client.java.document.json.JsonObject;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -26,13 +30,15 @@ public class RiaktsFacade {
     RiakClient client;
 
     int i = 0;
+    private String host;
 
-    private RiaktsFacade() {
+    private RiaktsFacade(String host) {
+        this.host = host;
     }
 
-    public static RiaktsFacade getInstancia() {
+    public static RiaktsFacade getInstancia(String host) {
         if (instancia == null) {
-            instancia = new RiaktsFacade();
+            instancia = new RiaktsFacade(host);
         }
         return instancia;
     }
@@ -40,7 +46,7 @@ public class RiaktsFacade {
     // retorna instância do riak
     public RiakClient getDB() throws UnknownHostException {
         if (client == null) {
-            client = RiakClient.newClient("localhost");
+            client = RiakClient.newClient(host);
         }
         return client;
     }
@@ -78,16 +84,16 @@ public class RiaktsFacade {
         i++;
         System.out.println(queryResult);
     }
-    
+
     //remoção de dados do banco, já que ele não permite a remoção de uma vez só
-    public void cleanDB() throws UnknownHostException, ExecutionException, InterruptedException{
+    public void cleanDB() throws UnknownHostException, ExecutionException, InterruptedException {
         String queryText = "delete from Tabela where i = " + i;
         Query query = new Query.Builder(queryText).build();
         this.getDB().execute(query);
         i++;
     }
-    
-    public void closeRiak() throws UnknownHostException{
+
+    public void closeRiak() throws UnknownHostException {
         this.getDB().shutdown();
     }
 }

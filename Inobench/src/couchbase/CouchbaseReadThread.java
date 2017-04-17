@@ -29,10 +29,10 @@ class CouchbaseReadThread extends Thread {
     /**
      * Construtor da classe.
      */
-    public CouchbaseReadThread(String nome, int qtdTransacoes) {
+    public CouchbaseReadThread(String nome, int qtdTransacoes, String endereco) {
         /* chamando o construtor de Thread passando o nome da thread como parâmetro */
         super(nome);
-        this.fachada = CouchbaseFacade.getInstancia();
+        this.fachada = CouchbaseFacade.getInstancia(endereco);
         this.qtdTransacoes = qtdTransacoes;
         this.nome = nome;
     }

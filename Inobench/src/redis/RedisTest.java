@@ -16,6 +16,15 @@ public class RedisTest {
 
     private int qtdUser;
     private int qtdTransacoes;
+    private String endereco;
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
 
     public int getQtdUser() {
         return qtdUser;
@@ -36,7 +45,7 @@ public class RedisTest {
     public void testarInsercao() throws InterruptedException {
         List threads = new ArrayList();//lista para guardar threads em execução
         for (int i = 0; i < qtdUser; i++) {
-            RedisInsertThread thread = new RedisInsertThread("user_" + i, qtdTransacoes);
+            RedisInsertThread thread = new RedisInsertThread("user_" + i, qtdTransacoes, endereco);
             thread.start();
             threads.add(thread);
         }
@@ -44,13 +53,13 @@ public class RedisTest {
         for (Object thread : threads) {
             ((Thread) thread).join();
         }
-        RedisFacade.getInstancia().destroyPool();
+        RedisFacade.getInstancia(endereco).destroyPool();
     }
 
     public void testarConsulta() throws InterruptedException {
         List threads = new ArrayList();//lista para guardar threads em execução
         for (int i = 0; i < qtdUser; i++) {
-            RedisReadThread thread = new RedisReadThread("user_" + i, qtdTransacoes);
+            RedisReadThread thread = new RedisReadThread("user_" + i, qtdTransacoes, endereco);
             thread.start();
             threads.add(thread);
         }
@@ -58,6 +67,6 @@ public class RedisTest {
         for (Object thread : threads) {
             ((Thread) thread).join();
         }
-        RedisFacade.getInstancia().destroyPool();
+        RedisFacade.getInstancia(endereco).destroyPool();
     }
 }

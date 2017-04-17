@@ -24,12 +24,22 @@ public class Inobench {
     private int tipo = 0;
     private int qtdUsers = 0;
     private int qtdTransacoes = 0;
+    private String endereco;
 
     private long tempoInicial;
     private long tempoFinal;
     private double duracao;
     private double vazao;
     private int erros;
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+    
 
     public double getDuracao() {
         return duracao;
@@ -91,11 +101,12 @@ public class Inobench {
         this.tempoFinal = tempoFinal;
     }
 
-    private void configurarPrametros(int banco, int tipo, int qtdUser, int qtdTransacoes) {
+    private void configurarPrametros(int banco, int tipo, int qtdUser, int qtdTransacoes, String endereco) {
         this.banco = banco;
         this.tipo = tipo;
         this.qtdUsers = qtdUser;
         this.qtdTransacoes = qtdTransacoes;
+        this.endereco = endereco;
     }
 
     public void preTeste() {
@@ -115,13 +126,14 @@ public class Inobench {
     public void testar() throws IOException, InterruptedException {
         CSVReaderToDocument leitor = new CSVReaderToDocument();
         Parameters p = leitor.getParametros();
-        configurarPrametros(p.getBanco(), p.getTipo(), p.getQtdUsers(), p.getQtdTransacoes());
+        configurarPrametros(p.getBanco(), p.getTipo(), p.getQtdUsers(), p.getQtdTransacoes(), p.getEndereco());
 
         switch (banco) {
             case 1:
                 MongoTest mongo = new MongoTest();
                 mongo.setQtdUser(qtdUsers);
                 mongo.setQtdTransacoes(qtdTransacoes);
+                mongo.setEndereco(endereco);
                 if (tipo == 1) {
                     mongo.testarInsercao();
                 } else {
@@ -132,6 +144,7 @@ public class Inobench {
                 CouchbaseTest couch = new CouchbaseTest();
                 couch.setQtdUser(qtdUsers);
                 couch.setQtdTransacoes(qtdTransacoes);
+                couch.setEndereco(endereco);
                 if (tipo == 1) {
                     couch.testarInsercao();
                 } else {
@@ -142,6 +155,7 @@ public class Inobench {
                 RedisTest redis = new RedisTest();
                 redis.setQtdUser(qtdUsers);
                 redis.setQtdTransacoes(qtdTransacoes);
+                redis.setEndereco(endereco);
                 if (tipo == 1) {
                     redis.testarInsercao();
                 } else {
@@ -152,6 +166,7 @@ public class Inobench {
                 RiaktsTest riak = new RiaktsTest();
                 riak.setQtdUser(qtdUsers);
                 riak.setQtdTransacoes(qtdTransacoes);
+                riak.setEndereco(endereco);
                 switch (tipo) {
                     case 1:
                         riak.testarInsercao();
