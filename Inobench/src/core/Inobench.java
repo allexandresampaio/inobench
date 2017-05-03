@@ -10,22 +10,23 @@ import CSVreader.CSVReaderToDocument;
 import couchbase.CouchbaseTest;
 import mongodb.MongoTest;
 import redis.RedisTest;
-import riakts.RiaktsTest;
 
 /**
- *
+ * Classe principal da aplicação
  * @author Allexandre
  */
 public class Inobench {
 
-    //banco 1 mongo, 2 couch, 3 redis, 4 riakts
+    //banco 1 mongo, 2 couch, 3 redis
     private int banco = 0;
     //tipo 1 insercao, tipo 2 consulta
     private int tipo = 0;
+    //quantidade de usuários simultâneos
     private int qtdUsers = 0;
+    //quantidade de transações para cada usuário
     private int qtdTransacoes = 0;
+    //endereço do host do banco de dados
     private String endereco;
-
     private long tempoInicial;
     private long tempoFinal;
     private double duracao;
@@ -40,7 +41,6 @@ public class Inobench {
         this.endereco = endereco;
     }
     
-
     public double getDuracao() {
         return duracao;
     }
@@ -60,7 +60,7 @@ public class Inobench {
     public double getVazao() {
         return vazao;
     }
-
+    //calcula vazão média de todas as operações
     public void setVazao() {
         if (this.duracao > 0) {
             this.vazao = (this.qtdUsers * this.qtdTransacoes) / this.duracao;
@@ -100,7 +100,7 @@ public class Inobench {
     public void setTempoFinal(long tempoFinal) {
         this.tempoFinal = tempoFinal;
     }
-
+    //seta no objeto os parâmetros recebidos
     private void configurarPrametros(int banco, int tipo, int qtdUser, int qtdTransacoes, String endereco) {
         this.banco = banco;
         this.tipo = tipo;
@@ -108,12 +108,17 @@ public class Inobench {
         this.qtdTransacoes = qtdTransacoes;
         this.endereco = endereco;
     }
-
+    //pré-processamento: zera a ocorrência de erros e grava o tempo inicial da execução
     public void preTeste() {
         Errors.getInstancia().setErro(0);
         this.setTempoInicial(System.currentTimeMillis());
     }
 
+    //pós-processamento: grava o tempo final da execução, 
+    //seta a quantidade de erros, 
+    //calcula a duração da execução
+    //calcula vazão média
+    //grava todos os resultados no arquivo de resultados
     public void posTeste() {
         this.setTempoFinal(System.currentTimeMillis());
         this.setErros(Errors.getInstancia().getErros());
@@ -123,6 +128,7 @@ public class Inobench {
         leitor.gravarResultados(this.banco, this.qtdUsers, this.qtdTransacoes, this.tipo, this.tempoInicial, this.tempoFinal, this.duracao, this.vazao, this.erros);
     }
 
+    //controla todos os testes
     public void testar() throws IOException, InterruptedException {
         CSVReaderToDocument leitor = new CSVReaderToDocument();
         Parameters p = leitor.getParametros();
@@ -162,24 +168,6 @@ public class Inobench {
                     redis.testarConsulta();
                 }
                 break;
-            case 4:
-                RiaktsTest riak = new RiaktsTest();
-                riak.setQtdUser(qtdUsers);
-                riak.setQtdTransacoes(qtdTransacoes);
-                riak.setEndereco(endereco);
-                switch (tipo) {
-                    case 1:
-                        riak.testarInsercao();
-                        break;
-                    case 2:
-                        riak.testarConsulta();
-                        break;
-                    case 3://case especial para remoção de dados do banco
-                        riak.testarDelete();
-                        break;
-                    default:
-                        break;
-                }
             default:
                 break;
         }

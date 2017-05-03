@@ -29,6 +29,7 @@ public class MongoFacade {
         this.host = host;
     }
 
+    //retorna a instância da fachada em execução
     public static MongoFacade getInstancia(String host) {
         if (instancia == null) {
             instancia = new MongoFacade(host);
@@ -36,6 +37,7 @@ public class MongoFacade {
         return instancia;
     }
 
+    //retorna um cliente para uso
     public MongoDatabase getDB() {
         if (mongoClient == null) {
             mongoClient = new MongoClient(host, port);
@@ -44,15 +46,18 @@ public class MongoFacade {
         return db;
     }
 
+    //retorna a coleção atual 
     public MongoCollection getColecao(String colecao) {
         MongoCollection col = MongoFacade.getInstancia(host).getDB().getCollection(colecao);
         return col;
     }
 
+    //insere dados no BD
     public void insert(Document documento) {
         this.getColecao("documentos").insertOne(documento);
     }
 
+    //lê dados no BD
     public void read(String date, String time) {
         BasicDBObject includeKeys = new BasicDBObject();
         includeKeys.append("date", date);

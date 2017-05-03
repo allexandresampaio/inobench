@@ -25,6 +25,7 @@ public class CouchbaseFacade {
         cluster = CouchbaseCluster.create(host);
     }
 
+    //busca a instância atual da aplicação
     public static CouchbaseFacade getInstancia(String host) {
         if (instancia == null) {
             instancia = new CouchbaseFacade(host);
@@ -32,7 +33,7 @@ public class CouchbaseFacade {
         return instancia;
     }
 
-    // couchdb-2.properties is on the classpath
+    //recupera um bucket para uso
     public Bucket getDB() {
         if (bucket == null) {
             bucket = cluster.openBucket("default");
@@ -40,13 +41,13 @@ public class CouchbaseFacade {
         return bucket;
     }
 
-    //cria um _id pra ser usado novamente quando for buscar os documentos
+    //insere o JSON com um id único no BD
     public void insert(JsonObject documento) {
         this.getDB().upsert(JsonDocument.create("key"+i, documento));
         i++;
     }
 
-    //busca pelo _id
+    //busca pelo id inserido
     public void read() {
         Object doc = this.getDB().get("key"+i);
         i++;

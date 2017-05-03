@@ -24,6 +24,7 @@ public class RedisFacade {
     Jedis jedis;
     int i = 0;
 
+    ///elementos de configuração da pool
     private JedisPoolConfig buildPoolConfig() {
         final JedisPoolConfig poolConfig = new JedisPoolConfig();
         poolConfig.setMaxTotal(1100);
@@ -43,6 +44,7 @@ public class RedisFacade {
         pool = new JedisPool(poolConfig, host);
     }
 
+    //retorna a instância da fachada em execução
     public static RedisFacade getInstancia(String host){
         if (instancia == null) {
             instancia = new RedisFacade(host);
@@ -57,6 +59,7 @@ public class RedisFacade {
     }
 
     //cria um _id pra ser usado novamente quando for buscar os documentos
+    //insere os dados no BD
     public void insert(Document d) {
         String key = "key" + i;
         String value = d.toString();
@@ -66,7 +69,7 @@ public class RedisFacade {
         i++;
     }
 
-    //busca pelo _id
+    //busca dados no BDpelo _id
     public void read() {
         Jedis jedis = this.getDB();
         Object doc = jedis.get("key" + i);
@@ -75,6 +78,7 @@ public class RedisFacade {
         System.out.println(doc);
     }
 
+    //fecha a pool
     public void destroyPool() {
         this.pool.destroy();
     }

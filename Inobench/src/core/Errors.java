@@ -6,7 +6,7 @@
 package core;
 
 /**
- *
+ * Classe para marcar a ocorrência de erros de execução
  * @author allexandre
  */
 public class Errors {

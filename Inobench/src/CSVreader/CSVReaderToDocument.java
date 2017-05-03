@@ -24,11 +24,8 @@ public class CSVReaderToDocument {
     ArrayList<Document> documentos = new ArrayList<>();
 
     private void criaDocumentos() throws IOException {
-        //String path = new File("src/arquivos/AirQualityUCI.csv").getCanonicalPath();
-        //BufferedReader br = new BufferedReader(new FileReader(path));
         InputStream is = CSVReaderToDocument.class.getResourceAsStream("/files/AirQualityUCI.csv");
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
-
         String line = "";
 
         while ((line = br.readLine()) != null) {

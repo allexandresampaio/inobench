@@ -12,9 +12,7 @@ import java.io.IOException;
  * @author Allexandre
  */
 public class Tester {
-
     public static void main(String[] args) throws IOException, InterruptedException {
-
         Inobench tester = new Inobench();
         tester.preTeste();
         tester.testar();
@@ -26,5 +24,4 @@ public class Tester {
         System.out.println("Erros: " + tester.getErros());
         System.exit(0);
     }
-
 }

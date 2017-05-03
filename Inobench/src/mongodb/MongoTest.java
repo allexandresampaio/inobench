@@ -42,6 +42,7 @@ public class MongoTest {
         this.qtdTransacoes = qtdTransacoes;
     }
 
+    //controla a thread de inserção de dados
     public void testarInsercao() throws InterruptedException {
         List threads = new ArrayList();//lista para guardar threads em execução
         for (int i = 0; i < qtdUser; i++) {
@@ -55,6 +56,7 @@ public class MongoTest {
         }
     }
 
+    //controla a thread de leitura de dados
     public void testarConsulta() throws InterruptedException {
         List threads = new ArrayList();//lista para guardar threads em execução
         for (int i = 0; i < qtdUser; i++) {
